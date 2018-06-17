@@ -2,6 +2,7 @@ require 'open-uri'
 
 class Student < ApplicationRecord
   has_and_belongs_to_many :terms
+  has_many :synopses
 
   def update_info(year)
     terms << Term.find(year) unless terms.pluck(:id).include?(year)
