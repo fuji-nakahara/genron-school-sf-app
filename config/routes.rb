@@ -1,3 +1,5 @@
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  direct :original_students do |year|
+    "http://school.genron.co.jp/works/sf/#{year.presence || 2018}/students/"
+  end
 end
