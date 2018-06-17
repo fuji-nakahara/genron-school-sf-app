@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   end
 
   direct :original_student do |year, student|
-    "http://school.genron.co.jp/works/sf/#{year || student.terms.last.id}/students/#{student.wp_id}"
+    "http://school.genron.co.jp/works/sf/#{year || student.terms.last.id}/students/#{student.original_id}"
   end
 
   direct :original_subjects do |year|

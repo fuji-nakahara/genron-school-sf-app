@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_17_130720) do
+ActiveRecord::Schema.define(version: 2018_06_17_135234) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,8 +20,8 @@ ActiveRecord::Schema.define(version: 2018_06_17_130720) do
     t.text "profile"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "wp_id", null: false
-    t.index ["wp_id"], name: "index_students_on_wp_id", unique: true
+    t.string "original_id", null: false
+    t.index ["original_id"], name: "index_students_on_original_id", unique: true
   end
 
   create_table "students_terms", id: false, force: :cascade do |t|
