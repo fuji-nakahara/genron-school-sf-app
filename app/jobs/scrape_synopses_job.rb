@@ -18,6 +18,6 @@ class ScrapeSynopsesJob < ApplicationJob
 
   def scrape_synopses_info(subject)
     doc = Nokogiri::HTML(open(original_subject_url(subject)))
-    doc.css('.student-list .written a').map { |e| e['href'].split('/').slice(-2..-1) }
+    doc.css('.written a').map { |e| e['href'].split('/').slice(-2..-1) }.compact
   end
 end

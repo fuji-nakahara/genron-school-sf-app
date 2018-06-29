@@ -18,7 +18,7 @@ class ScrapeWorksJob < ApplicationJob
   def scrape_works_info(subject)
     doc = Nokogiri::HTML(open(original_subject_url(subject)))
     if subject.no_synopsis
-      doc.css('.student-list .written a').map { |e| e['href'].split('/').slice(-2..-1) }
+      doc.css('.written a').map { |e| e['href'].split('/').slice(-2..-1) }
     else
       doc.css('.has-work a').map { |e| e['href'].split('/').slice(-2..-1) }
     end
