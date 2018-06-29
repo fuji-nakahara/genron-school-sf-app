@@ -5,12 +5,15 @@ class ScrapeSubjectsJob < ApplicationJob
 
   include Rails.application.routes.url_helpers
 
+  NO_SYNOPSIS_NUMBER = 11
+
   def perform(*years)
     years = years.presence || Term.pluck(:id)
     years.each do |year|
       number_to_title = scrape_subject_info(year)
       number_to_title.each do |number, title|
-        Subject.create_with(title: title).find_or_create_by(term_id: year, number: number)
+        no_synopsis = number.to_i == NO_SYNOPSIS_NUMBER
+        Subject.create_with(title: title, no_synopsis: no_synopsis).find_or_create_by(term_id: year, number: number)
       end
     end
   end

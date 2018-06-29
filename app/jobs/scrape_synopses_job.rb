@@ -6,6 +6,7 @@ class ScrapeSynopsesJob < ApplicationJob
   include Rails.application.routes.url_helpers
 
   def perform(subject = Subject.latest)
+    return if subject.no_synopsis
     student_id_to_synopsis_id = scrape_synopses_info(subject)
     student_id_to_synopsis_id.each do |student_id, synopsis_id|
       student = Student.find_by(original_id: student_id)
