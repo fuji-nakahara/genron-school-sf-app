@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_06_29_133634) do
+ActiveRecord::Schema.define(version: 2018_06_30_083859) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 2018_06_29_133634) do
     t.text "appeal"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "selected", default: false, null: false
     t.index ["original_id"], name: "index_synopses_on_original_id", unique: true
     t.index ["student_id"], name: "index_synopses_on_student_id"
     t.index ["subject_id"], name: "index_synopses_on_subject_id"
@@ -68,6 +69,7 @@ ActiveRecord::Schema.define(version: 2018_06_29_133634) do
     t.text "appeal"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "score", default: 0, null: false
     t.index ["original_id"], name: "index_works_on_original_id", unique: true
     t.index ["student_id"], name: "index_works_on_student_id"
     t.index ["subject_id"], name: "index_works_on_subject_id"
