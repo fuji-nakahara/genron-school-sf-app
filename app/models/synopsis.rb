@@ -1,6 +1,8 @@
 class Synopsis < ApplicationRecord
-  belongs_to :subject
-  belongs_to :student
+  belongs_to :subject, counter_cache: true
+  belongs_to :student, counter_cache: true
+
+  scope :ordered, -> { includes(:subject).order('subjects.term_id desc', 'subjects.number desc') }
 
   def update_contents
     doc         = Nokogiri::HTML(open(original_url))

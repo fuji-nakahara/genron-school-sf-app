@@ -1,0 +1,6 @@
+= link_to synopsis.original_url, class: 'list-group-item list-group-item-action' do
+  .d-flex.justify-content-between.align-items-start
+    %h5= synopsis.title.presence || '(タイトルなし）'
+    - if synopsis.selected
+      %span.badge.badge-secondary 選出
+  = yield

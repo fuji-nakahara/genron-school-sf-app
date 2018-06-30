@@ -1,0 +1,40 @@
+- content_for :title, @student.name
+
+%header.mb-3
+  %h1= @student.name
+
+%p= link_to '超・SF作家育成サイトのプロフィールページへ', @student.original_url
+
+%section.mb-3
+  %header.mb-3
+    %h2 得点
+  %dl
+    - @student.terms.each do |term|
+      %dt= term.id
+      %dd= @student.synopses.select { |s| s.subject.term_id == term.id }.size + @student.works.select { |w| w.subject.term_id == term.id }.map(&:score).sum
+
+- unless @student.works.empty?
+  %section.mb-3
+    %header.mb-3
+      %h2 実作
+    - @student.works.group_by { |w| w.subject.term_id }.each do |year, works|
+      %section.mb-3
+        %header.mb-3
+          %h4= year
+        .list-group
+          - works.each do |work|
+            = render work do
+              %span.text-muted.link{ data: { href: subject_path(work.subject) } } #{work.subject.display_number} #{work.subject.title}
+
+- unless @student.synopses.empty?
+  %section.mb-3
+    %header.mb-3
+      %h2 梗概
+    - @student.synopses.group_by { |w| w.subject.term_id }.each do |year, synopses|
+      %section.mb-3
+        %header.mb-3
+          %h4= year
+        .list-group
+          - synopses.each do |synopsis|
+            = render synopsis do
+              %span.text-muted.link{ data: { href: subject_path(synopsis.subject) } } #{synopsis.subject.display_number} #{synopsis.subject.title}

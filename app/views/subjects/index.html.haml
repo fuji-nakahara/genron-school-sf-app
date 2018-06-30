@@ -9,5 +9,4 @@
       %h2= year
 
     .list-group
-      - subjects.each do |subject|
-        = link_to subject.title, subject, class: 'list-group-item lit-group-item-action'
+      = render subjects

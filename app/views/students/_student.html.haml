@@ -1,0 +1,6 @@
+= link_to student, class: 'list-group-item list-group-item-action d-flex align-items-center' do
+  %span.flex-grow-1= student.name
+  - if student.works.size > 0
+    %span.badge.badge-primary.badge-pill= student.works.size
+  - if student.synopses.size > 0
+    %span.badge.badge-secondary.badge-pill.ml-1= student.synopses.size
