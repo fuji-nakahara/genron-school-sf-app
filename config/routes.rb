@@ -12,10 +12,10 @@ Rails.application.routes.draw do
   end
 
   direct :original_subject do |subject|
-    "http://school.genron.co.jp/works/sf/#{subject.term.id}/subjects/#{subject.number}"
+    "http://school.genron.co.jp/works/sf/#{subject.term_id}/subjects/#{subject.number}"
   end
 
   direct :original_work do |work|
-    "http://school.genron.co.jp/works/sf/#{work.subject.term.id}/students/#{work.student.original_id}/#{work.original_id}/"
+    "http://school.genron.co.jp/works/sf/#{work.subject.term_id}/students/#{work.student.original_id}/#{work.original_id}/"
   end
 end
