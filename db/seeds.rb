@@ -9,4 +9,5 @@ ScrapeSubjectsJob.perform_now
 Subject.all.each do |subject|
   ScrapeSynopsesJob.perform_now(subject)
   ScrapeWorksJob.perform_now(subject)
+  ScrapeScoresJob.perform_now(subject)
 end
