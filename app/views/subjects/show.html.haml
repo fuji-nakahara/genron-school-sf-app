@@ -1,0 +1,26 @@
+- content_for :title, "#{@subject.title} #{@subject.term_id} #{@subject.display_number}"
+
+%header.mb-3
+  .lead #{@subject.term_id} #{@subject.display_number}
+  %h1= @subject.title
+
+- if @subject.works.present?
+  %section.mb-3
+    %header.mb-3
+      %h2 実作
+    .list-group
+      - @subject.works.each do |work|
+        = link_to work.original_url, class: 'list-group-item d-flex justify-content-between align-items-center' do
+          #{work.student.name}『#{work.title}』
+          - if work.score > 0
+            %span.badge.badge-primary.badge-pill= work.score
+
+- unless @subject.no_synopsis
+  %section.mb-3
+    %header.mb-3
+      %h2 梗概
+    - @subject.synopses.each do |synopsis|
+      = link_to synopsis.original_url, class: 'list-group-item d-flex justify-content-between align-items-center' do
+        #{synopsis.student.name}『#{synopsis.title}』
+        - if synopsis.selected
+          %span.badge.badge-secondary 選出

@@ -1,7 +1,12 @@
 class Subject < ApplicationRecord
   belongs_to :term
-  has_many :synopses
-  has_many :works
+  has_many :synopses, -> { order(selected: :desc, created_at: :asc) }
+  has_many :works, -> { order(score: :desc, created_at: :asc) }
 
-  scope :latest, -> { order(:term_id, :number).last }
+  scope :ordered, -> { order(term_id: :desc, number: :desc) }
+  scope :latest, -> { ordered.first }
+
+  def display_number
+    "第#{number}回"
+  end
 end

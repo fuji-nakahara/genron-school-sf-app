@@ -1,11 +1,21 @@
 !!!
 %html
   %head
-    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %title GenronSchoolSfApp
+    %meta{ charset: 'utf-8' }
+    %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no'}
+    %title= content_for?(:title) ? yield(:title) : 'SF創作講座'
     = csrf_meta_tags
     = csp_meta_tag
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   %body
-    = yield
+    %nav.navbar.navbar-expand-sm.navbar-dark.sticky-top.bg-dark.mb-3
+      .container
+        = link_to 'SF創作講座', '', class: 'navbar-brand'
+        %button.navbar-toggler{ type: 'button', 'data-toggle': 'collapse', 'data-target': '#navbar-collapse', 'aria-controls': 'navbar-collapse', 'aria-expanded': 'false', 'aria-label': 'Toggle navigation' }
+          %span.navbar-toggler-icon
+        #navbar-collapse.collapse.navbar-collapse
+          %ul.navbar-nav.mr-auto
+            %li.nav-item{ class: params[:controller] == 'subjects' ? 'active' : '' }= link_to '課題一覧', subjects_path, class: 'nav-link'
+    %main.container
+      = yield
