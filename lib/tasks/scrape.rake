@@ -28,6 +28,8 @@ namespace :scrape do
 
   desc 'Scrape scores'
   task scores: :environment do
-    ScrapeScoresJob.perform_now
+    Subject.latest3.last(2).each do |subject|
+      ScrapeScoresJob.perform_now(subject)
+    end
   end
 end

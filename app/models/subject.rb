@@ -5,7 +5,7 @@ class Subject < ApplicationRecord
 
   scope :ordered, -> { order(term_id: :desc, number: :desc) }
   scope :latest, -> { ordered.first }
-  scope :latest2, -> { ordered.limit(2) }
+  scope :latest3, -> { ordered.limit(3) }
   scope :previous, -> { ordered.second }
 
   def display_number

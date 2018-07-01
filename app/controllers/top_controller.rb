@@ -1,5 +1,5 @@
 class TopController < ApplicationController
   def show
-    @subjects = Subject.latest2
+    @subjects = Subject.latest3
   end
 end
