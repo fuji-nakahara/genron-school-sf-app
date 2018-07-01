@@ -3,3 +3,11 @@
 .link:hover {
   text-decoration: underline;
 }
+
+.novel {
+  font-family: serif;
+
+  &.blockquote {
+    font-size: .9rem;
+  }
+}

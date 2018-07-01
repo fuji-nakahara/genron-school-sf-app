@@ -5,7 +5,7 @@ class ScrapeWorksJob < ApplicationJob
 
   include Rails.application.routes.url_helpers
 
-  def perform(subject = Subject.latest)
+  def perform(subject = Subject.previous)
     student_id_to_work_id = scrape_works_info(subject)
     student_id_to_work_id.each do |student_id, work_id|
       student = Student.find_by(original_id: student_id)

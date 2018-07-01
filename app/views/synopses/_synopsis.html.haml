@@ -3,4 +3,6 @@
     %h5= synopsis.title.presence || '(タイトルなし）'
     - if synopsis.selected
       %span.badge.badge-secondary 選出
+  %blockquote.blockquote.novel
+    %p= truncate(synopsis.content, length: 80, separator: '。')
   = yield

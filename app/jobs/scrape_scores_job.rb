@@ -5,7 +5,7 @@ class ScrapeScoresJob < ApplicationJob
 
   include Rails.application.routes.url_helpers
 
-  def perform(subject = Subject.latest)
+  def perform(subject = Subject.previous)
     original_id_to_score = scrape_scores_info(subject)
     return if original_id_to_score.empty?
     Synopsis.where(original_id: original_id_to_score.keys).update_all(selected: true)

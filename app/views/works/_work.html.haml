@@ -3,4 +3,6 @@
     %h5= work.title.presence || '（タイトルなし）'
     - if work.score > 0
       %span.badge.badge-info.badge-pill= work.score
+  %blockquote.blockquote.novel
+    %p= truncate(work.content, length: 80, separator: '。')
   = yield
