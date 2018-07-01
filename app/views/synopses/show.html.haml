@@ -1,0 +1,24 @@
+- content_for :title, @synopsis.title
+
+%header.mb-3
+  .lead= link_to "#{@synopsis.subject.term_id} #{@synopsis.subject.display_number}「#{@synopsis.subject.title}」", @synopsis.subject, class: 'text-muted'
+  %h1
+    = @synopsis.title
+
+%p= link_to '超・SF作家育成サイトの作品ページへ', @synopsis.original_url
+
+%section.mb-3
+  .list-group
+    - cache @synopsis.student do
+      = render @synopsis.student
+
+%section.mb-3
+  %header.mb-3
+    %h2 梗概
+  .novel{ class: "term#{@synopsis.subject.term_id}" }= raw(@synopsis.body)
+
+- if @synopsis.appeal.present?
+  %section.mb-3
+    %header.mb-3
+      %h2 アピール文
+    .novel{ class: "term#{@synopsis.subject.term_id}" }= raw(@synopsis.appeal)

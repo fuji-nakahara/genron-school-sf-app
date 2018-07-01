@@ -1,7 +1,7 @@
 - content_for :title, "#{@subject.title} #{@subject.term_id} #{@subject.display_number}"
 
 %header.mb-3
-  .lead #{@subject.term_id} #{@subject.display_number}
+  .lead.text-muted #{@subject.term_id} #{@subject.display_number}
   %h1= @subject.title
 
 %p= link_to '超・SF作家育成サイトの課題ページへ', original_subject_url(@subject)
