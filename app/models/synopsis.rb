@@ -15,14 +15,6 @@ class Synopsis < ApplicationRecord
     Nokogiri::HTML(body).content
   end
 
-  def available_url
-    if student.available
-      Rails.application.routes.url_helpers.synopsis_path(self)
-    else
-      original_url
-    end
-  end
-
   def original_url
     Rails.application.routes.url_helpers.original_work_url(self)
   end

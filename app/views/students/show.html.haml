@@ -3,7 +3,7 @@
 %header.mb-3
   %h1= @student.name
 
-- if @student.available
+- if authenticated? || @student.available
   %p= simple_format(auto_link(@student.profile))
 
 %p= link_to '超・SF作家育成サイトのプロフィールページへ', @student.original_url
