@@ -1,9 +1,9 @@
 = link_to student, class: 'list-group-item list-group-item-action' do
-  .d-flex.align-items-start
-    %h5.flex-grow-1= student.name
+  .d-flex.align-items-center
+    %span.lead.flex-grow-1= student.name
     - if student.works.size > 0
       %span.badge.badge-primary.badge-pill= student.works.size
     - if student.synopses.size > 0
       %span.badge.badge-secondary.badge-pill.ml-1= student.synopses.size
-  - if student.available
-    %p.text-muted= truncate(student.profile, length: 80)
+  - if student.available && student.profile.present?
+    %p.text-muted.mt-1.mb-0= truncate(student.profile, length: 80)

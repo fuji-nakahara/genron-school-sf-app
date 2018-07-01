@@ -1,5 +1,5 @@
 = link_to subject, class: 'list-group-item list-group-item-action d-flex align-items-center' do
-  %span.flex-grow-1= subject.title
+  %span.lead.flex-grow-1= subject.title
   - if subject.works.size > 0
     %span.badge.badge-primary.badge-pill= subject.works.size
   - if subject.synopses.size > 0
