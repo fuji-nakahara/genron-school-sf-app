@@ -23,8 +23,9 @@
           %h4= year
         .list-group
           - works.each do |work|
-            = render work do
-              %span.text-muted.link{ data: { href: subject_path(work.subject) } } #{work.subject.display_number} #{work.subject.title}
+            - cache work do
+              = render work do
+                %span.text-muted.link{ data: { href: subject_path(work.subject) } } #{work.subject.display_number} #{work.subject.title}
 
 - unless @student.synopses.empty?
   %section.mb-3
@@ -36,5 +37,6 @@
           %h4= year
         .list-group
           - synopses.each do |synopsis|
-            = render synopsis do
-              %span.text-muted.link{ data: { href: subject_path(synopsis.subject) } } #{synopsis.subject.display_number} #{synopsis.subject.title}
+            - cache synopsis do
+              = render synopsis do
+                %span.text-muted.link{ data: { href: subject_path(synopsis.subject) } } #{synopsis.subject.display_number} #{synopsis.subject.title}

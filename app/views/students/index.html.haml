@@ -7,4 +7,4 @@
         %h2= year
 
       .list-group
-        = render students
+        = render partial: 'students/student', collection: students, cached: true

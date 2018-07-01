@@ -12,8 +12,9 @@
       %h2 実作
     .list-group
       - @subject.works.each do |work|
-        = render work do
-          %span.text-muted.link{ data: { href: student_path(work.student) } }= work.student.name
+        - cache work do
+          = render work do
+            %span.text-muted.link{ data: { href: student_path(work.student) } }= work.student.name
 
 - unless @subject.no_synopsis
   %section.mb-3
@@ -21,5 +22,6 @@
       %h2 梗概
     .list-group
       - @subject.synopses.each do |synopsis|
-        = render synopsis do
-          %span.text-muted.link{ data: { href: student_path(synopsis.student) } }= synopsis.student.name
+        - cache synopsis do
+          = render synopsis do
+            %span.text-muted.link{ data: { href: student_path(synopsis.student) } }= synopsis.student.name

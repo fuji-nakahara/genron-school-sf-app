@@ -6,4 +6,4 @@
       %h2= year
 
     .list-group
-      = render subjects
+      = render partial: 'subjects/subject', collection: subjects, cached: true

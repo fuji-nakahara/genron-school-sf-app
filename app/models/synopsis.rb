@@ -1,6 +1,6 @@
 class Synopsis < ApplicationRecord
-  belongs_to :subject, counter_cache: true
-  belongs_to :student, counter_cache: true
+  belongs_to :subject, counter_cache: true, touch: true
+  belongs_to :student, counter_cache: true, touch: true
 
   scope :ordered, -> { includes(:subject).order('subjects.term_id desc', 'subjects.number desc') }
 
