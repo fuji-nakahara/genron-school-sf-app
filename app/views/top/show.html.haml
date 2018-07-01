@@ -5,7 +5,7 @@
         .card-subtitle.text-muted #{@subjects.first.term_id} #{@subjects.first.display_number}
         %h4.card-title.mb-0= link_to @subjects.first.title, @subjects.first, class: 'text-dark'
       .list-group.list-group-flush
-        - @subjects.first.synopses.includes(:student, :subject).each do |synopsis|
+        - @subjects.first.synopses.includes(:student, :subject).reverse_order.each do |synopsis|
           - cache synopsis do
             = render synopsis do
               %span.text-muted.link{ data: { href: student_path(synopsis.student) } }= synopsis.student.name
