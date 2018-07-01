@@ -38,6 +38,7 @@ gem 'action_args'
 gem 'bootstrap'
 gem 'haml-rails'
 gem 'jquery-rails'
+gem 'rinku'
 gem 'sentry-raven'
 gem 'twitter'
 
