@@ -1,8 +1,5 @@
 - content_for :title, '課題一覧'
 
-%header.mb-3
-  %h1 課題一覧
-
 - @subjects.group_by(&:term_id).each do |year, subjects|
   %section.mb-3
     %header.mb-3

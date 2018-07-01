@@ -1,0 +1,26 @@
+.row
+  %section.col-md-6.mb-3
+    .card
+      %header.card-body
+        .card-subtitle.text-muted #{@subjects.first.term_id} #{@subjects.first.display_number}
+        %h4.card-title.mb-0= link_to @subjects.first.title, @subjects.first, class: 'text-dark'
+      .list-group.list-group-flush
+        - @subjects.first.synopses.includes(:student, :subject).each do |synopsis|
+          = render synopsis do
+            %span.text-muted.link{ data: { href: student_path(synopsis.student) } }= synopsis.student.name
+
+  %section.col-md-6.mb-3
+    .card
+      %header.card-body
+        .card-subtitle.text-muted #{@subjects.second.term_id} #{@subjects.second.display_number}
+        %h4.card-title.mb-0= link_to @subjects.second.title, @subjects.second, class: 'text-dark'
+      - if @subjects.second.works.exists?
+        .list-group.list-group-flush
+          - @subjects.second.works.includes(:student, :subject).each do |work|
+            = render work do
+              %span.text-muted.link{ data: { href: student_path(work.student) } }= work.student.name
+      - else
+        .list-group.list-group-flush
+          - @subjects.second.synopses.includes(:student, :subject).where(selected: true).each do |synopsis|
+            = render synopsis do
+              %span.text-muted.link{ data: { href: student_path(synopsis.student) } }= synopsis.student.name
