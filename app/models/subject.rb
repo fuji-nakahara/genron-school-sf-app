@@ -1,7 +1,7 @@
 class Subject < ApplicationRecord
   belongs_to :term
-  has_many :synopses, -> { order(selected: :desc, created_at: :asc) }
-  has_many :works, -> { order(score: :desc, created_at: :asc) }
+  has_many :synopses, -> { includes(:student).order('selected desc', 'students.original_id') }
+  has_many :works, -> { includes(:student).order('score desc', 'students.original_id') }
 
   scope :ordered, -> { order(term_id: :desc, number: :desc) }
   scope :latest, -> { ordered.first }

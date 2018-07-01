@@ -5,10 +5,14 @@
         .card-subtitle.text-muted #{@subjects.first.term_id} #{@subjects.first.display_number}
         %h4.card-title.mb-0= link_to @subjects.first.title, @subjects.first, class: 'text-dark'
       .list-group.list-group-flush
-        - @subjects.first.synopses.includes(:student, :subject).reverse_order.each do |synopsis|
-          - cache synopsis do
+        - if @subjects.first.no_synopsis
+          - @subjects.first.works.includes(:student, :subject).unscope(:order).order(created_at: :desc).each do |work|
+            = render work do
+              = render 'work_footer', work: work
+        - else
+          - @subjects.first.synopses.includes(:student, :subject).unscope(:order).order(created_at: :desc).each do |synopsis|
             = render synopsis do
-              %span.text-muted.link{ data: { href: student_path(synopsis.student) } }= synopsis.student.name
+              = render 'work_footer', work: synopsis
 
   %section.col-md-6.mb-3
     .card
@@ -17,13 +21,13 @@
         %h4.card-title.mb-0= link_to @subjects.second.title, @subjects.second, class: 'text-dark'
       - if @subjects.second.works.exists?
         .list-group.list-group-flush
-          - @subjects.second.works.includes(:student, :subject).each do |work|
-            - cache work do
-              = render work do
-                %span.text-muted.link{ data: { href: student_path(work.student) } }= work.student.name
+          - @subjects.second.works.includes(:student, :subject).unscope(:order).order(created_at: :desc).each do |work|
+            = render work do
+              = render 'work_footer', work: work
       - else
         .list-group.list-group-flush
-          - @subjects.second.synopses.includes(:student, :subject).where(selected: true).each do |synopsis|
+          - synopses = @subjects.second.synopses
+          - (synopses.where(selected: true).exists? ? synopses.includes(:student, :subject).where(selected: true) : synopses.includes(:student, :subject)).each do |synopsis|
             - cache synopsis do
               = render synopsis do
                 %span.text-muted.link{ data: { href: student_path(synopsis.student) } }= synopsis.student.name
