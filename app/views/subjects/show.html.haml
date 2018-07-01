@@ -1,4 +1,4 @@
-- content_for :title, "#{@subject.title} #{@subject.term_id} #{@subject.display_number}"
+- content_for :title, @subject.title
 
 %header.mb-3
   .lead.text-muted #{@subject.term_id} #{@subject.display_number}
