@@ -3,6 +3,21 @@
 %header.mb-5
   .lead.text-muted #{@subject.term_id} #{@subject.display_number}
   %h1= @subject.title
+  %dl.row
+    - unless @subject.deadline_date.nil?
+      .col-6.col-md-3
+        %dt 梗概締切
+        %dd= l @subject.deadline_date, format: :long
+    - unless @subject.comment_date.nil?
+      .col-6.col-md-3
+        %dt 梗概講評会
+        %dd= l @subject.comment_date, format: :long
+    .col-6.col-md-3
+      %dt 実作締切
+      %dd= l @subject.work_deadline_date, format: :long
+    .col-6.col-md-3
+      %dt 実作講評会
+      %dd= l @subject.work_comment_date, format: :long
   %p= link_to '超・SF作家育成サイトの課題ページへ', original_subject_url(@subject)
 
 - unless @subject.works.empty?
@@ -15,7 +30,7 @@
           = render work do
             %span.text-muted.link{ data: { href: student_path(work.student) } }= work.student.name
 
-- unless @subject.no_synopsis
+- unless @subject.synopses.empty?
   %section.mb-5
     %header
       %h2 梗概

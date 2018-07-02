@@ -6,4 +6,4 @@
     - if student.synopses.size > 0
       %span.badge.badge-secondary.badge-pill.ml-1= student.synopses.size
   - if student.available && student.profile.present?
-    %p.text-muted.mt-1.mb-0= truncate(student.profile, length: 80)
+    %p.text-muted.mb-0= truncate(student.profile, length: 80)

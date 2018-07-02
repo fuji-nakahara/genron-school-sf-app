@@ -8,6 +8,14 @@ class Subject < ApplicationRecord
   scope :latest3, -> { ordered.limit(3) }
   scope :previous, -> { ordered.second }
 
+  def no_synopsis
+    comment_date.nil?
+  end
+
+  def date
+    comment_date || work_comment_date
+  end
+
   def display_number
     "第#{number}回"
   end

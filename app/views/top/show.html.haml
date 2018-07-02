@@ -1,11 +1,11 @@
 .row
-  - @subjects.each_with_index do |subject, i|
+  - @subjects.each do |subject|
     %section.col-md-6.col-lg-4.mb-5
       .card
         %header.card-body
           .card-subtitle.d-flex.justify-content-between.align-items-start
             %span.text-muted #{subject.term_id} #{subject.display_number}
-            = subject_label(i, subject.no_synopsis)
+            = subject_state_label(subject)
           %h4.card-title.mb-0
             = link_to subject.title, subject, class: 'text-dark'
         .list-group.list-group-flush

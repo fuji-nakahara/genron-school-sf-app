@@ -1,12 +1,13 @@
 - content_for :title, @synopsis.title
 
 %header.mb-5
-  .lead= link_to "#{@synopsis.subject.term_id} #{@synopsis.subject.display_number}「#{@synopsis.subject.title}」", @synopsis.subject, class: 'text-muted'
   %h1= @synopsis.title
   %p= link_to '超・SF作家育成サイトの作品ページへ', @synopsis.original_url
 
 %section.mb-5
   .list-group
+    - cache @synopsis.subject do
+      = render @synopsis.subject
     - cache @synopsis.student do
       = render @synopsis.student
 
