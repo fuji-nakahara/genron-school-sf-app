@@ -9,10 +9,11 @@
 %section.mb-5
   %header
     %h2 得点
-  %dl
+  %dl.row
     - @student.terms.each do |term|
-      %dt= term.id
-      %dd= @student.synopses.select { |s| s.subject.term_id == term.id }.size + @student.works.select { |w| w.subject.term_id == term.id }.map(&:score).sum
+      .col-4.col-md-2
+        %dt= term.id
+        %dd= @student.score(term.id)
 
 - unless @student.works.empty?
   %section.mb-5

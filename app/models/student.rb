@@ -5,6 +5,10 @@ class Student < ApplicationRecord
   has_many :synopses, -> { ordered }
   has_many :works, -> { ordered }
 
+  def score(year)
+    synopses.includes(:subject).where('subjects.term_id': year).count + works.includes(:subject).where('subjects.term_id': year).sum(:score)
+  end
+
   def update_info(year)
     terms << Term.find(year) unless terms.pluck(:id).include?(year)
     self.name, self.profile = scrape_name_and_profile(year)
