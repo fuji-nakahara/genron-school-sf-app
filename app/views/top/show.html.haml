@@ -1,17 +1,20 @@
 .row
-  - @subjects.each do |subject|
+  - @subjects.each_with_index do |subject, i|
     %section.col-md-6.col-lg-4.mb-5
       .card
         %header.card-body
-          .card-subtitle.text-muted #{subject.term_id} #{subject.display_number}
-          %h4.card-title.mb-0= link_to subject.title, subject, class: 'text-dark'
+          .card-subtitle.d-flex.justify-content-between.align-items-start
+            %span.text-muted #{subject.term_id} #{subject.display_number}
+            = subject_label(i, subject.no_synopsis)
+          %h4.card-title.mb-0
+            = link_to subject.title, subject, class: 'text-dark'
         .list-group.list-group-flush
           - if subject.works.where('score > 0').exists?
             - subject.works.includes(:student, :subject).where('score > 0').each do |work|
               - cache work do
                 = render work do
                   %span.text-muted.link{ data: { href: student_path(work.student) } }= work.student.name
-          - if subject.works.exists?
+          - elsif subject.works.exists?
             - subject.works.includes(:student, :subject).unscope(:order).order(created_at: :desc).each do |work|
               - cache work do
                 = render work do
