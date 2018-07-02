@@ -1,0 +1,26 @@
+#!/usr/bin/env ruby
+require 'fileutils'
+include FileUtils
+
+# path to your application root.
+APP_ROOT = File.expand_path('..', __dir__)
+
+def system!(*args)
+  system(*args) || abort("\n== Command #{args} failed ==")
+end
+
+chdir APP_ROOT do
+  # This script is a way to capture, download and restore the heroku production database.
+
+  file_name = "tmp/#{Time.now.strftime('%F')}.dump"
+
+  puts '== Capturing a new backup =='
+  system! 'heroku pg:backups:capture'
+
+  puts "\n== Downloading a backup =="
+  system! "rm -f #{file_name}"
+  system! "heroku pg:backups:download --output=#{file_name}"
+
+  puts "\n== Restoring the backup =="
+  system! "pg_restore --verbose --clean --no-acl --no-owner -h localhost -d genron-school-sf-app_development #{file_name}"
+end
