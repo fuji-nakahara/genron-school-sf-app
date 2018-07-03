@@ -30,3 +30,16 @@
     %header
       %h2 アピール文
     .novel{ class: "term-#{@synopsis.subject.term_id}" }= raw(@synopsis.appeal)
+
+%hr.mb-5
+
+%nav.mb-5
+  .list-group
+    - @synopsis.subject.synopses.includes(:student).each do |synopsis|
+      - if synopsis == @synopsis
+        = render synopsis, class: 'list-group-item-secondary' do
+          %span.text-muted.link{ data: { href: student_path(synopsis.student) } }= synopsis.student.name
+      - else
+        - cache synopsis do
+          = render synopsis do
+            %span.text-muted.link{ data: { href: student_path(synopsis.student) } }= synopsis.student.name
