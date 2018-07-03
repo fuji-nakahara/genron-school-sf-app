@@ -16,11 +16,10 @@
                   %span.text-muted.link{ data: { href: student_path(work.student) } }= work.student.name
           - elsif subject.works.exists?
             - subject.works.includes(:student, :subject).unscope(:order).order(created_at: :desc).each do |work|
-              - cache work do
-                = render work do
-                  .d-flex.justify-content-between
-                    %span.text-muted.link{ data: { href: student_path(work.student) } }= work.student.name
-                    %span.text-muted #{time_ago_in_words(work.created_at)}前
+              = render work do
+                .d-flex.justify-content-between
+                  %span.text-muted.link{ data: { href: student_path(work.student) } }= work.student.name
+                  %span.text-muted #{time_ago_in_words(work.created_at)}前
           - elsif subject.synopses.where(selected: true).exists?
             - subject.synopses.includes(:student, :subject).where(selected: true).each do |synopsis|
               - cache synopsis do
@@ -28,8 +27,7 @@
                   %span.text-muted.link{ data: { href: student_path(synopsis.student) } }= synopsis.student.name
           - else
             - subject.synopses.includes(:student, :subject).unscope(:order).order(created_at: :desc).each do |synopsis|
-              - cache synopsis do
-                = render synopsis do
-                  .d-flex.justify-content-between
-                    %span.text-muted.link{ data: { href: student_path(synopsis.student) } }= synopsis.student.name
-                    %span.text-muted #{time_ago_in_words(synopsis.created_at)}前
+              = render synopsis do
+                .d-flex.justify-content-between
+                  %span.text-muted.link{ data: { href: student_path(synopsis.student) } }= synopsis.student.name
+                  %span.text-muted #{time_ago_in_words(synopsis.created_at)}前
