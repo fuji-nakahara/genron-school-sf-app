@@ -1,8 +1,9 @@
 - content_for :title, @synopsis.title
 
-%header.mb-5
+%header.mb-3
   %h1= @synopsis.title
-  %p= link_to '超・SF作家育成サイトの作品ページへ', @synopsis.original_url
+
+= render 'shared/link_to_original', obj: @synopsis
 
 %section.mb-5
   .list-group

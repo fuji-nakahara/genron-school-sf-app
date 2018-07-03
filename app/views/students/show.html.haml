@@ -1,10 +1,12 @@
 - content_for :title, @student.name
 
-%header.mb-5
+%header
   %h1= @student.name
-  - if (authenticated? || @student.available) && @student.profile.present?
-    %p= simple_format(auto_link(@student.profile))
-  %p= link_to '超・SF作家育成サイトのプロフィールページへ', @student.original_url
+
+- if (authenticated? || @student.available) && @student.profile.present?
+  %p= simple_format(auto_link(@student.profile))
+
+= render 'shared/link_to_original', obj: @student
 
 %section.mb-5
   %header
