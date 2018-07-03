@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :subjects, only: %i[index show]
   resources :students, only: %i[index show]
   resources :synopses, only: :show
+  resources :works, only: :show
 
   direct :original_students do |year|
     "http://school.genron.co.jp/works/sf/#{year.presence || 2018}/students/"

@@ -1,24 +1,25 @@
 - content_for :title, @synopsis.title
 
-%header.mb-3
-  %h1= @synopsis.title
-
-= render 'shared/link_to_original', obj: @synopsis
-
-%section.mb-5
+%nav.mb-3
   .list-group
     - cache @synopsis.subject do
       = render @synopsis.subject
     - cache @synopsis.student do
       = render @synopsis.student
 
-%section.mb-5
-  %header
-    %h2 梗概
-  .novel{ class: "term#{@synopsis.subject.term_id}" }= raw(@synopsis.body)
+= render 'shared/link_to_original', obj: @synopsis
+
+%header
+  %h1
+    = @synopsis.title
+    - if @synopsis.selected
+      %span.badge.badge-secondary 選出
+
+%main.mb-5
+  .novel{ class: "term-#{@synopsis.subject.term_id}" }= raw(@synopsis.body)
 
 - if @synopsis.appeal.present?
   %section.mb-5
     %header
       %h2 アピール文
-    .novel{ class: "term#{@synopsis.subject.term_id}" }= raw(@synopsis.appeal)
+    .novel{ class: "term-#{@synopsis.subject.term_id}" }= raw(@synopsis.appeal)

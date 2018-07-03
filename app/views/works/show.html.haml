@@ -1,0 +1,25 @@
+- content_for :title, @work.title
+
+%nav.mb-3
+  .list-group
+    - cache @work.subject do
+      = render @work.subject
+    - cache @work.student do
+      = render @work.student
+
+= render 'shared/link_to_original', obj: @work
+
+%header
+  %h1
+    = @work.title
+    - if @work.score > 0
+      %span.badge.badge-pill.badge-success= @work.score
+
+%main.mb-5
+  .novel{ class: "term-#{@work.subject.term_id}" }= raw(@work.body)
+
+- if @work.appeal.present?
+  %section.mb-5
+    %header
+      %h2 アピール文
+    .novel{ class: "term-#{@work.subject.term_id}" }= raw(@work.appeal)
