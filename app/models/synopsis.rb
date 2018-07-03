@@ -4,6 +4,10 @@ class Synopsis < ApplicationRecord
 
   scope :ordered, -> { includes(:subject).order('subjects.term_id desc', 'subjects.number desc') }
 
+  def work
+    Work.find_by(subject_id: subject_id, student_id: student_id)
+  end
+
   def update_contents
     doc         = Nokogiri::HTML(open(original_url))
     self.title  = doc.at_css('.summary-title')&.content

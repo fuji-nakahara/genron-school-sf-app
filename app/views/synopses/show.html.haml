@@ -7,6 +7,13 @@
     - cache @synopsis.student do
       = render @synopsis.student
 
+%nav.nav.nav-pills.justify-content-center.mb-3
+  = link_to '梗概', '#', class: 'nav-link active'
+  - if @synopsis.work.nil?
+    = link_to '実作', '#', class: 'nav-link disabled'
+  - else
+    = link_to '実作', work_path(@synopsis.work), class: 'nav-link'
+
 = render 'shared/link_to_original', obj: @synopsis
 
 %header
