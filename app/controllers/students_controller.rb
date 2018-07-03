@@ -1,6 +1,6 @@
 class StudentsController < ApplicationController
   def index
-    @year_to_students = Term.includes(:students).order(id: :desc).map { |term| [term.id, term.students] }.to_h
+    @year_to_students = Term.year_to_students
   end
 
   def show(id)
