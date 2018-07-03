@@ -4,6 +4,6 @@ class StudentsController < ApplicationController
   end
 
   def show(id)
-    @student = Student.includes(:terms, synopses: %i[student subject], works: %i[student subject]).find(id)
+    @student = Student.includes(:terms, synopses: :subject, works: :subject).find(id)
   end
 end

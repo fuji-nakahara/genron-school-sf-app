@@ -4,6 +4,6 @@ class SubjectsController < ApplicationController
   end
 
   def show(id)
-    @subject = Subject.includes(synopses: %i[student subject], works: %i[student subject]).find(id)
+    @subject = Subject.includes(synopses: :student, works: :student).find(id)
   end
 end
