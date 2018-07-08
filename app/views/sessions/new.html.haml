@@ -1,0 +1,13 @@
+- content_for :title, 'ログイン'
+
+= form_with url: login_path do |form|
+
+  .form-group
+    = form.label :password
+    = form.password_field :password, class: 'form-control', required: true
+
+  .form-group.custom-control.custom-checkbox
+    = form.check_box :remember_me, class: 'custom-control-input'
+    = form.label :remember_me, class: 'custom-control-label'
+
+  = form.submit 'ログイン', class: 'btn btn-outline-primary'

@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   resources :students, only: %i[index show]
   resources :synopses, only: :show
   resources :works, only: :show
+  get '/login', to: 'sessions#new'
+  post '/login', to: 'sessions#create'
+  delete '/logout', to: 'sessions#destroy'
 
   direct :original_students do |year|
     "http://school.genron.co.jp/works/sf/#{year.presence || 2018}/students/"

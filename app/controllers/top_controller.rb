@@ -1,7 +1,5 @@
 class TopController < ApplicationController
-  def show(password = nil)
-    remember(password) if password.present?
-
+  def show
     @subjects = Subject.latest3
   end
 end
