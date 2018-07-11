@@ -9,7 +9,7 @@ namespace :scrape do
     end
 
     start_time = Time.zone.now
-    today      = Time.zone.today
+    date       = Time.zone.yesterday # with 1 day margin
 
     ScrapeSubjectsJob.perform_now(Term.last.id)
     Subject.where('created_at > ?', start_time).each do |subject|
@@ -22,12 +22,12 @@ namespace :scrape do
       EOS
     end
 
-    Subject.where('deadline_date >= ?', today).each { |subject| ScrapeSynopsesJob.perform_now(subject) }
+    Subject.where('deadline_date >= ?', date).each { |subject| ScrapeSynopsesJob.perform_now(subject) }
     Synopsis.includes(:student, :subject).where('created_at > ?', start_time).each do |synopsis|
       twitter_client.update %(梗概が提出されました！ #SF創作講座\n#{synopsis.student.name}『#{synopsis.title}』\n"#{synopsis.content.truncate(80, separator: '。')}"\n#{synopsis.original_url})
     end
 
-    Subject.where('work_deadline_date >= ?', today).each { |subject| ScrapeWorksJob.perform_now(subject) }
+    Subject.where('work_deadline_date >= ?', date).each { |subject| ScrapeWorksJob.perform_now(subject) }
     Work.includes(:student, :subject).where('created_at > ?', start_time).each do |work|
       twitter_client.update %(実作が提出されました！ #SF創作講座\n#{work.student.name}『#{work.title}』\n"#{work.content.truncate(80, separator: '。')}"\n#{work.original_url})
     end
