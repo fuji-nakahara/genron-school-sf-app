@@ -13,7 +13,13 @@ namespace :scrape do
 
     ScrapeSubjectsJob.perform_now(Term.last.id)
     Subject.where('created_at > ?', start_time).each do |subject|
-      twitter_client.update "課題が公開されました！ #SF創作講座\n「#{subject.title}」\n#{subject.original_url}"
+      twitter_client.update <<~EOS
+        課題が公開されました！ #SF創作講座
+        第#{subject.number}回「#{subject.title}」
+        梗概締切: #{I18n.l(subject.deadline_date, format: :long)}
+        講評会: #{I18n.l(subject.comment_date, format: :long)}
+        #{subject.original_url}
+      EOS
     end
 
     Subject.where('deadline_date >= ?', today).each { |subject| ScrapeSynopsesJob.perform_now(subject) }
