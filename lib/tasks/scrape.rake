@@ -9,18 +9,19 @@ namespace :scrape do
     end
 
     start_time = Time.zone.now
+    today      = Time.zone.today
 
     ScrapeSubjectsJob.perform_now(Term.last.id)
     Subject.where('created_at > ?', start_time).each do |subject|
       twitter_client.update "課題が公開されました！ #SF創作講座\n「#{subject.title}」\n#{subject.original_url}"
     end
 
-    ScrapeSynopsesJob.perform_now
+    Subject.where('deadline_date >= ?', today).each { |subject| ScrapeSynopsesJob.perform_now(subject) }
     Synopsis.includes(:student, :subject).where('created_at > ?', start_time).each do |synopsis|
       twitter_client.update %(梗概が提出されました！ #SF創作講座\n#{synopsis.student.name}『#{synopsis.title}』\n"#{synopsis.content.truncate(80, separator: '。')}"\n#{synopsis.original_url})
     end
 
-    ScrapeWorksJob.perform_now
+    Subject.where('work_deadline_date >= ?', today).each { |subject| ScrapeWorksJob.perform_now(subject) }
     Work.includes(:student, :subject).where('created_at > ?', start_time).each do |work|
       twitter_client.update %(実作が提出されました！ #SF創作講座\n#{work.student.name}『#{work.title}』\n"#{work.content.truncate(80, separator: '。')}"\n#{work.original_url})
     end
