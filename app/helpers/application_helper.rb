@@ -1,3 +1,3 @@
 module ApplicationHelper
-  include Rinku
+  include Twitter::TwitterText::Autolink
 end
