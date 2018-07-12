@@ -66,4 +66,14 @@ namespace :scrape do
       ScrapeScoresJob.perform_now(subject)
     end
   end
+
+  desc <<~DESC
+    Scrape students.
+
+      $ bundle exec rake scrape:students YEARS=2016,2017
+  DESC
+  task students: :environment do
+    years = ENV.fetch('YEARS', '').split(',').map(&:to_i).presence || [Term.last.id]
+    ScrapeStudentsJob.perform_now(*years)
+  end
 end
