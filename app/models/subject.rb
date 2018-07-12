@@ -8,7 +8,7 @@ class Subject < ApplicationRecord
   scope :latest3, -> { ordered.limit(3) }
   scope :previous, -> { ordered.second }
 
-  def no_synopsis
+  def no_synopsis?
     comment_date.nil?
   end
 
