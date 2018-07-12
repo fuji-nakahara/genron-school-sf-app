@@ -12,7 +12,7 @@ end
 chdir APP_ROOT do
   # This script is a way to capture, download and restore the heroku production database.
 
-  file_name = "tmp/#{Time.now.strftime('%F')}.dump"
+  file_name = "tmp/backups/#{Time.now.strftime('%F')}.dump"
 
   puts '== Capturing a new backup =='
   system! 'heroku pg:backups:capture'
