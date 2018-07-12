@@ -54,9 +54,15 @@ namespace :scrape do
     end
   end
 
-  desc 'Scrape scores'
+  desc <<~DESC
+    Scrape scores.
+    
+      $ bundle exec rake scrape:scores SUBJECT_IDS=1,2
+  DESC
   task scores: :environment do
-    Subject.latest3.last(2).each do |subject|
+    ids = ENV.fetch('SUBJECT_IDS', '').split(',').map(&:to_i)
+    subjects = ids.empty? ? Subject.latest3.last(2) : Subject.where(id: ids)
+    subjects.each do |subject|
       ScrapeScoresJob.perform_now(subject)
     end
   end
