@@ -25,12 +25,32 @@ namespace :scrape do
 
     Subject.where('deadline_date >= ?', date).each { |subject| ScrapeSynopsesJob.perform_now(subject) }
     Synopsis.includes(:student, :subject).where('created_at > ?', start_time).each do |synopsis|
-      twitter_client.update %(梗概が提出されました！ #SF創作講座\n#{synopsis.student.name}『#{synopsis.title}』\n"#{synopsis.content.truncate(80, separator: '。')}"\n#{synopsis.original_url})
+      title = "梗概が提出されました！ #SF創作講座\n#{synopsis.student.name}『#{synopsis.title.truncate(80)}』"
+      quote = %(\n"#{synopsis.content.truncate(80, separator: '。')}")
+      url   = "\n#{synopsis.original_url}"
+
+      result = Twitter::TwitterText::Validation.parse_tweet(title + quote + url)
+
+      if result[:valid]
+        twitter_client.update(title + quote + url)
+      else
+        twitter_client.update(title + url)
+      end
     end
 
     Subject.where('work_deadline_date >= ?', date).each { |subject| ScrapeWorksJob.perform_now(subject) }
     Work.includes(:student, :subject).where('created_at > ?', start_time).each do |work|
-      twitter_client.update %(実作が提出されました！ #SF創作講座\n#{work.student.name}『#{work.title}』\n"#{work.content.truncate(80, separator: '。')}"\n#{work.original_url})
+      title = "実作が提出されました！ #SF創作講座\n#{work.student.name}『#{work.title.truncate(80)}』"
+      quote = %(\n"#{work.content.truncate(80, separator: '。')}")
+      url   = "\n#{work.original_url}"
+
+      result = Twitter::TwitterText::Validation.parse_tweet(title + quote + url)
+
+      if result[:valid]
+        twitter_client.update(title + quote + url)
+      else
+        twitter_client.update(title + url)
+      end
     end
   end
 
