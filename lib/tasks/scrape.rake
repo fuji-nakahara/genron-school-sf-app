@@ -13,11 +13,12 @@ namespace :scrape do
 
     ScrapeSubjectsJob.perform_now(Term.last.id)
     Subject.where('created_at > ?', start_time).each do |subject|
+      date_prefix = subject.no_synopsis? ? 'work_' : ''
       twitter_client.update <<~EOS
         課題が公開されました！ #SF創作講座
         第#{subject.number}回「#{subject.title}」
-        梗概締切: #{I18n.l(subject.deadline_date, format: :long)}
-        講評会: #{I18n.l(subject.comment_date, format: :long)}
+        #{subject.no_synopsis? ? '実作' : '梗概'}締切: #{I18n.l(subject.send("#{date_prefix}deadline_date"), format: :long)}
+        講評会: #{I18n.l(subject.send("#{date_prefix}comment_date"), format: :long)}
         #{subject.original_url}
       EOS
     end
