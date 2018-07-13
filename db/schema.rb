@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_02_160846) do
+ActiveRecord::Schema.define(version: 2018_07_13_160649) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,7 +23,6 @@ ActiveRecord::Schema.define(version: 2018_07_02_160846) do
     t.string "original_id", null: false
     t.integer "synopses_count", default: 0, null: false
     t.integer "works_count", default: 0, null: false
-    t.boolean "available", default: false, null: false
     t.index ["original_id"], name: "index_students_on_original_id", unique: true
   end
 

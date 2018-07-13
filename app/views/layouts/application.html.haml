@@ -19,7 +19,5 @@
           %ul.navbar-nav.mr-auto
             %li.nav-item{ class: params[:controller] == 'subjects' ? 'active' : '' }= link_to '課題一覧', subjects_path, class: 'nav-link'
             %li.nav-item{ class: params[:controller] == 'students' ? 'active' : '' }= link_to '受講生一覧', students_path, class: 'nav-link'
-          - if logged_in?
-            = link_to 'ログアウト', logout_path, method: :delete, class: 'btn btn-secondary'
     .container
       = yield

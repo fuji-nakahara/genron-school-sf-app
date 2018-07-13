@@ -3,8 +3,7 @@
 %header
   %h1= @student.name
 
-- if (logged_in? || @student.available) && @student.profile.present?
-  %p= simple_format(auto_link(@student.profile))
+%p= simple_format(auto_link(@student.profile))
 
 = render 'shared/link_to_original', obj: @student
 
