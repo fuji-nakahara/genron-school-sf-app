@@ -11,6 +11,7 @@ class ScrapeSynopsesJob < ApplicationJob
     student_id_to_synopsis_id.each do |student_id, synopsis_id|
       student = Student.find_by(original_id: student_id)
       Synopsis.find_or_create_by(subject: subject, student: student, original_id: synopsis_id, &:update_contents)
+      sleep 1
     end
   end
 

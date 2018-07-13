@@ -64,6 +64,7 @@ namespace :scrape do
     subjects = ids.empty? ? Subject.latest3.last(2) : Subject.where(id: ids)
     subjects.each do |subject|
       ScrapeScoresJob.perform_now(subject)
+      sleep 1
     end
   end
 

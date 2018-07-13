@@ -22,6 +22,7 @@ class ScrapeSubjectsJob < ApplicationJob
           work_comment_date:  subject_info.work_comment_date,
         ).find_or_create_by(term_id: year, number: subject_info.number)
       end
+      sleep 1
     end
   end
 

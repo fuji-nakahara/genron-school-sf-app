@@ -10,6 +10,7 @@ class ScrapeWorksJob < ApplicationJob
     student_id_to_work_id.each do |student_id, work_id|
       student = Student.find_by(original_id: student_id)
       Work.find_or_create_by(subject: subject, student: student, original_id: work_id, &:update_contents)
+      sleep 1
     end
   end
 
