@@ -1,4 +1,4 @@
-# genron-school-sf-app
+# genron-sf-app
 
 This is the [Ruby on Rails](https://rubyonrails.org/) application that helps you read the works of [超・SF作家育成サイト](http://school.genron.co.jp/works/sf/).
 
