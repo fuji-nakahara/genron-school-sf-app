@@ -11,7 +11,7 @@ namespace :scrape do
     start_time = Time.zone.now
     date       = Time.zone.yesterday # with 1 day margin
 
-    ScrapeSubjectsJob.perform_now(Term.last.id)
+    ImportSubjectsJob.perform_now(Term.last.id)
     Subject.where('created_at > ?', start_time).each do |subject|
       date_prefix = subject.no_synopsis? ? 'work_' : ''
       twitter_client.update <<~EOS

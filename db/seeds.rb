@@ -4,7 +4,7 @@ end
 
 ImportStudentsJob.perform_now
 
-ScrapeSubjectsJob.perform_now
+ImportSubjectsJob.perform_now
 
 Subject.all.each do |subject|
   ScrapeSynopsesJob.perform_now(subject)
