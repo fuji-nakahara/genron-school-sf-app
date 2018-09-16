@@ -75,6 +75,6 @@ namespace :scrape do
   DESC
   task students: :environment do
     years = ENV.fetch('YEARS', '').split(',').map(&:to_i).presence || [Term.last.id]
-    ScrapeStudentsJob.perform_now(*years)
+    ImportStudentsJob.perform_now(*years)
   end
 end

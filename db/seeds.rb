@@ -2,7 +2,7 @@
   Term.create(id: id) unless Term.exists?(id: id)
 end
 
-ScrapeStudentsJob.perform_now
+ImportStudentsJob.perform_now
 
 ScrapeSubjectsJob.perform_now
 
