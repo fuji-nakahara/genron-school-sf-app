@@ -5,7 +5,9 @@ class Student < ApplicationRecord
   has_many :synopses, -> { ordered }
   has_many :works, -> { ordered }
 
-  scope :by, ->(original_id) { find_by(original_id: original_id) }
+  def self.of(original_id)
+    find_by(original_id: original_id)
+  end
 
   def score(year)
     synopses.includes(:subject).where('subjects.term_id': year).count + works.includes(:subject).where('subjects.term_id': year).sum(:score)
