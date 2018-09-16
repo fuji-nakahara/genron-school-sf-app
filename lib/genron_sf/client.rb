@@ -3,6 +3,7 @@ require 'open-uri'
 
 require_relative 'models/student'
 require_relative 'models/student_list'
+require_relative 'models/subject'
 require_relative 'models/subject_list'
 
 module GenronSf
@@ -25,6 +26,11 @@ module GenronSf
       def get_subject_list(year)
         doc = new("/#{year}/").parse
         Models::SubjectList.new(doc, year: year)
+      end
+
+      def get_subject(year, number)
+        doc = new("/#{year}/subjects/#{number}/").parse
+        Models::Subject.new(doc, year: year, number: number)
       end
     end
 

@@ -63,7 +63,7 @@ namespace :scrape do
     ids = ENV.fetch('SUBJECT_IDS', '').split(',').map(&:to_i)
     subjects = ids.empty? ? Subject.latest3.last(2) : Subject.where(id: ids)
     subjects.each do |subject|
-      ScrapeScoresJob.perform_now(subject)
+      ImportScoresJob.perform_now(subject)
       sleep 1
     end
   end
