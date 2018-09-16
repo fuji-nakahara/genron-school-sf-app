@@ -15,41 +15,44 @@ namespace :import do
     Subject.where('created_at > ?', start_time).each do |subject|
       date_prefix = subject.no_synopsis? ? 'work_' : ''
       twitter_client.update <<~EOS
-        課題が公開されました！ #SF創作講座
-        第#{subject.number}回「#{subject.title}」
+        【課題】 第#{subject.number}回「#{subject.title}」
         #{subject.no_synopsis? ? '実作' : '梗概'}締切: #{I18n.l(subject.send("#{date_prefix}deadline_date"), format: :long)}
         講評会: #{I18n.l(subject.send("#{date_prefix}comment_date"), format: :long)}
-        #{subject.original_url}
+        #{subject.original_url} #SF創作講座
       EOS
     end
 
     Subject.where('deadline_date >= ?', date).each { |subject| ImportSynopsesJob.perform_now(subject) }
     Synopsis.includes(:student, :subject).where('created_at > ?', start_time).each do |synopsis|
-      title = "梗概が提出されました！ #SF創作講座\n#{synopsis.student.name}『#{synopsis.title.truncate(80)}』"
-      quote = %(\n"#{synopsis.content.truncate(80, separator: '。')}")
-      url   = "\n#{synopsis.original_url}"
+      screen_name = synopsis.student.twitter_screen_name.nil? ? nil : " @#{synopsis.student.twitter_screen_name} "
 
-      result = Twitter::TwitterText::Validation.parse_tweet(title + quote + url)
+      title  = "【梗概】#{synopsis.student.name}#{screen_name}『#{synopsis.title.truncate(80)}』"
+      quote  = %(\n"#{synopsis.content.truncate(80, separator: '。')}")
+      footer = "\n#{synopsis.original_url} #SF創作講座"
+
+      result = Twitter::TwitterText::Validation.parse_tweet(title + quote + footer)
 
       if result[:valid]
-        twitter_client.update(title + quote + url)
+        twitter_client.update(title + quote + footer)
       else
-        twitter_client.update(title + url)
+        twitter_client.update(title + footer)
       end
     end
 
     Subject.where('work_deadline_date >= ?', date).each { |subject| ImportWorksJob.perform_now(subject) }
     Work.includes(:student, :subject).where('created_at > ?', start_time).each do |work|
-      title = "実作が提出されました！ #SF創作講座\n#{work.student.name}『#{work.title.truncate(80)}』"
-      quote = %(\n"#{work.content.truncate(80, separator: '。')}")
-      url   = "\n#{work.original_url}"
+      screen_name = synopsis.student.twitter_screen_name.nil? ? nil : " @#{synopsis.student.twitter_screen_name} "
 
-      result = Twitter::TwitterText::Validation.parse_tweet(title + quote + url)
+      title  = "【実作】#{work.student.name}#{screen_name}『#{work.title.truncate(80)}』"
+      quote  = %(\n"#{work.content.truncate(80, separator: '。')}")
+      footer = "\n#{work.original_url} #SF創作講座"
+
+      result = Twitter::TwitterText::Validation.parse_tweet(title + quote + footer)
 
       if result[:valid]
-        twitter_client.update(title + quote + url)
+        twitter_client.update(title + quote + footer)
       else
-        twitter_client.update(title + url)
+        twitter_client.update(title + footer)
       end
     end
   end
@@ -60,7 +63,7 @@ namespace :import do
       $ bundle exec rake import:scores SUBJECT_IDS=1,2
   DESC
   task scores: :environment do
-    ids = ENV.fetch('SUBJECT_IDS', '').split(',').map(&:to_i)
+    ids      = ENV.fetch('SUBJECT_IDS', '').split(',').map(&:to_i)
     subjects = ids.empty? ? Subject.latest3.last(2) : Subject.where(id: ids)
     subjects.each do |subject|
       ImportScoresJob.perform_now(subject)

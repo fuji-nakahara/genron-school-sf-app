@@ -28,4 +28,8 @@ class Student < ApplicationRecord
   def original_urls
     terms.map { |term| original_url(term.id) }
   end
+
+  def twitter_screen_name
+    Twitter::TwitterText::Extractor.extract_mentioned_screen_names(profile).first
+  end
 end
