@@ -1,5 +1,5 @@
-namespace :scrape do
-  desc 'Scrape and tweet latest subjects, synopses and works'
+namespace :import do
+  desc 'Import and tweet latest subjects, synopses and works'
   task latest: :environment do
     twitter_client = Twitter::REST::Client.new do |config|
       config.consumer_key        = Rails.application.credentials.dig(:twitter, :consumer_key)
@@ -55,23 +55,22 @@ namespace :scrape do
   end
 
   desc <<~DESC
-    Scrape scores.
+    Import scores.
     
-      $ bundle exec rake scrape:scores SUBJECT_IDS=1,2
+      $ bundle exec rake import:scores SUBJECT_IDS=1,2
   DESC
   task scores: :environment do
     ids = ENV.fetch('SUBJECT_IDS', '').split(',').map(&:to_i)
     subjects = ids.empty? ? Subject.latest3.last(2) : Subject.where(id: ids)
     subjects.each do |subject|
       ImportScoresJob.perform_now(subject)
-      sleep 1
     end
   end
 
   desc <<~DESC
-    Scrape students.
+    Import students.
 
-      $ bundle exec rake scrape:students YEARS=2016,2017
+      $ bundle exec rake import:students YEARS=2016,2017
   DESC
   task students: :environment do
     years = ENV.fetch('YEARS', '').split(',').map(&:to_i).presence || [Term.last.id]
