@@ -1,7 +1,7 @@
 module GenronSf
   module Models
     class Subject < Base
-      WorkInfo = Struct.new(:id, :student_id)
+      WorkInfo = Struct.new(:student_id, :id)
 
       attr_reader :year, :number
 

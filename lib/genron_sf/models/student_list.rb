@@ -21,7 +21,7 @@ module GenronSf
 
       def students
         @students ||= doc.css('.student-list-item a').map do |element|
-          Student.new(element.css('.name').content, element['href'].split('/').last)
+          Student.new(element.at_css('.name').content, element['href'].split('/').last)
         end
       end
     end

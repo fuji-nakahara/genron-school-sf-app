@@ -5,6 +5,7 @@ require_relative 'models/student'
 require_relative 'models/student_list'
 require_relative 'models/subject'
 require_relative 'models/subject_list'
+require_relative 'models/work'
 
 module GenronSf
   class Client
@@ -34,7 +35,7 @@ module GenronSf
       end
 
       def get_work(year, student_id, id)
-        doc = new("/#{year}/students/#{student_id}/#{id}/")
+        doc = new("/#{year}/students/#{student_id}/#{id}/").parse
         Models::Work.new(doc, year: year, student_id: student_id, id: id)
       end
     end

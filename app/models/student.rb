@@ -26,13 +26,4 @@ class Student < ApplicationRecord
   def original_urls
     terms.map { |term| original_url(term.id) }
   end
-
-  private
-
-  def scrape_name_and_profile(year = nil)
-    doc     = Nokogiri::HTML(open(original_url(year)))
-    name    = doc.at_css('main header h1').content
-    profile = doc.at_css('main header p').content.strip
-    [name, profile != 'プロフィールが設定されていません。' ? profile : nil]
-  end
 end

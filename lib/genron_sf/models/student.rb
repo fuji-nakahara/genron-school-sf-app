@@ -14,7 +14,9 @@ module GenronSf
       end
 
       def profile
-        @profile ||= doc.at_css('#main header p').content.strip
+        return @profile if defined?(@profile)
+        profile_raw = doc.at_css('#main header p').content.strip
+        @profile = profile_raw != 'プロフィールが設定されていません。' ? profile_raw : nil
       end
     end
   end

@@ -4,7 +4,7 @@ class ImportScoresJob < ApplicationJob
   queue_as :default
 
   def perform(subject = Subject.previous)
-    original_id_to_score = GenronSf::Client.get_subject(subject.year, subject.number).work_id_to_score
+    original_id_to_score = GenronSf::Client.get_subject(subject.term_id, subject.number).work_id_to_score
     return if original_id_to_score.empty?
 
     Synopsis.where(original_id: original_id_to_score.keys).update_all(selected: true)
