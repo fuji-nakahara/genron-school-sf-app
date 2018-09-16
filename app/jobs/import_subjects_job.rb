@@ -16,7 +16,7 @@ class ImportSubjectsJob < ApplicationJob
           comment_date:       subject.number == NO_SYNOPSIS_NUMBER ? nil : subject.comment_date,
           work_deadline_date: subject.work_deadline_date,
           work_comment_date:  subject.work_comment_date,
-        ).find_or_create_by(term_id: year, number: subject.number)
+        ).find_or_create_by!(term_id: year, number: subject.number)
       end
     end
   end

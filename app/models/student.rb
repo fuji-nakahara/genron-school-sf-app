@@ -9,14 +9,14 @@ class Student < ApplicationRecord
     synopses.includes(:subject).where('subjects.term_id': year).count + works.includes(:subject).where('subjects.term_id': year).sum(:score)
   end
 
-  def update_info(year)
+  def update_info!(year)
     student = GenronSf::Client.get_student(year, original_id)
 
     self.name    = student.name
     self.profile = student.profile
     self.terms << Term.find(year) unless terms.pluck(:id).include?(year)
 
-    save
+    save!
   end
 
   def original_url(year = terms.last.id)
