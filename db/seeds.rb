@@ -2,12 +2,12 @@
   Term.create(id: id) unless Term.exists?(id: id)
 end
 
-ScrapeStudentsJob.perform_now
+ImportStudentsJob.perform_now
 
-ScrapeSubjectsJob.perform_now
+ImportSubjectsJob.perform_now
 
 Subject.all.each do |subject|
-  ScrapeSynopsesJob.perform_now(subject)
-  ScrapeWorksJob.perform_now(subject)
-  ScrapeScoresJob.perform_now(subject)
+  ImportSynopsesJob.perform_now(subject)
+  ImportWorksJob.perform_now(subject)
+  ImportScoresJob.perform_now(subject)
 end

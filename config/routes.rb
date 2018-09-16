@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   end
 
   direct :original_student do |year, student|
-    "http://school.genron.co.jp/works/sf/#{year || student.terms.last.id}/students/#{student.original_id}"
+    "http://school.genron.co.jp/works/sf/#{year || student.terms.last.id}/students/#{student.original_id}/"
   end
 
   direct :original_subjects do |year|
@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   end
 
   direct :original_subject do |subject|
-    "http://school.genron.co.jp/works/sf/#{subject.term_id}/subjects/#{subject.number}"
+    "http://school.genron.co.jp/works/sf/#{subject.term_id}/subjects/#{subject.number}/"
   end
 
   direct :original_work do |work|
