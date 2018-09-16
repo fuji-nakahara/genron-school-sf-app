@@ -49,6 +49,13 @@ module GenronSf
         end.compact
       end
 
+      def works(no_synopsis: false)
+        @works ||= doc.css(no_synopsis ? '.written a' : '.has-work a').map do |element|
+          arr = element['href'].split('/').slice(-2..-1)
+          WorkInfo.new(arr[0], arr[1]) unless arr.empty?
+        end.compact
+      end
+
       private
 
       def parse_date(date_str)

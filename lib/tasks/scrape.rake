@@ -38,7 +38,7 @@ namespace :scrape do
       end
     end
 
-    Subject.where('work_deadline_date >= ?', date).each { |subject| ScrapeWorksJob.perform_now(subject) }
+    Subject.where('work_deadline_date >= ?', date).each { |subject| ImportWorksJob.perform_now(subject) }
     Work.includes(:student, :subject).where('created_at > ?', start_time).each do |work|
       title = "実作が提出されました！ #SF創作講座\n#{work.student.name}『#{work.title.truncate(80)}』"
       quote = %(\n"#{work.content.truncate(80, separator: '。')}")

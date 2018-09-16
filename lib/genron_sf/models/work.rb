@@ -19,6 +19,14 @@ module GenronSf
         @summary ||= doc.at_css('.summary-content').tap { |e| e.at_css('.count-character').remove }.children.to_html.strip
       end
 
+      def work_title
+        @work_title ||= doc.at_css('.work-title')&.content
+      end
+
+      def body
+        @body ||= doc.at_css('.work-content').tap { |e| e.at_css('.count-character').remove }.children.to_html.strip
+      end
+
       def appeal
         @appeal ||= doc.at_css('.appeal-content')&.tap { |e| e.at_css('.count-character')&.remove }&.children&.to_html&.strip
       end

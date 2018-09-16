@@ -8,6 +8,6 @@ ImportSubjectsJob.perform_now
 
 Subject.all.each do |subject|
   ImportSynopsesJob.perform_now(subject)
-  ScrapeWorksJob.perform_now(subject)
+  ImportWorksJob.perform_now(subject)
   ImportScoresJob.perform_now(subject)
 end
