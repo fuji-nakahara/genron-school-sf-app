@@ -2,6 +2,7 @@ require 'open-uri'
 require 'nokogiri'
 
 require_relative 'models/student_list'
+require_relative 'models/student'
 
 module GenronSf
   class Client
@@ -13,6 +14,11 @@ module GenronSf
       def get_student_list(year)
         doc = new("/#{year}/students/").parse
         Models::StudentList.new(doc, year: year)
+      end
+
+      def get_student(year, id)
+        doc = new("/#{year}/students/#{id}/").parse
+        Models::Student.new(doc, id: id)
       end
     end
 

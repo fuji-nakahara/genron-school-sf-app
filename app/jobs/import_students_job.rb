@@ -11,7 +11,6 @@ class ImportStudentsJob < ApplicationJob
       original_ids.each do |original_id|
         student = Student.find_or_initialize_by(original_id: original_id)
         student.update_info(year)
-        sleep 1
       end
     end
   end

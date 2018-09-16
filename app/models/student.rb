@@ -1,4 +1,4 @@
-require 'open-uri'
+require 'genron_sf/client'
 
 class Student < ApplicationRecord
   has_and_belongs_to_many :terms, -> { reverse_order }
@@ -10,8 +10,12 @@ class Student < ApplicationRecord
   end
 
   def update_info(year)
-    terms << Term.find(year) unless terms.pluck(:id).include?(year)
-    self.name, self.profile = scrape_name_and_profile(year)
+    student = GenronSf::Client.get_student(year, original_id)
+
+    self.name    = student.name
+    self.profile = student.profile
+    self.terms << Term.find(year) unless terms.pluck(:id).include?(year)
+
     save
   end
 
