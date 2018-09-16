@@ -32,6 +32,11 @@ module GenronSf
         doc = new("/#{year}/subjects/#{number}/").parse
         Models::Subject.new(doc, year: year, number: number)
       end
+
+      def get_work(year, student_id, id)
+        doc = new("/#{year}/students/#{student_id}/#{id}/")
+        Models::Work.new(doc, year: year, student_id: student_id, id: id)
+      end
     end
 
     def initialize(path)

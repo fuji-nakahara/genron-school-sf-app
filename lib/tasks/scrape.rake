@@ -23,7 +23,7 @@ namespace :scrape do
       EOS
     end
 
-    Subject.where('deadline_date >= ?', date).each { |subject| ScrapeSynopsesJob.perform_now(subject) }
+    Subject.where('deadline_date >= ?', date).each { |subject| ImportSynopsesJob.perform_now(subject) }
     Synopsis.includes(:student, :subject).where('created_at > ?', start_time).each do |synopsis|
       title = "梗概が提出されました！ #SF創作講座\n#{synopsis.student.name}『#{synopsis.title.truncate(80)}』"
       quote = %(\n"#{synopsis.content.truncate(80, separator: '。')}")

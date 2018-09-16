@@ -1,6 +1,8 @@
 module GenronSf
   module Models
     class Subject < Base
+      WorkInfo = Struct.new(:id, :student_id)
+
       attr_reader :year, :number
 
       def post_initialize(options)
@@ -38,6 +40,13 @@ module GenronSf
           score   = element.at_css('.score')&.content
           [work_id, score] unless work_id.nil?
         end.compact.to_h
+      end
+
+      def synopses
+        @synopses ||= doc.css('.written a').map do |element|
+          arr = element['href'].split('/').slice(-2..-1)
+          WorkInfo.new(arr[0], arr[1]) unless arr.empty?
+        end.compact
       end
 
       private
