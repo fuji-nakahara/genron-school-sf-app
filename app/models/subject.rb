@@ -3,6 +3,7 @@ class Subject < ApplicationRecord
   has_many :synopses, -> { includes(:student).order('selected desc', 'students.original_id') }
   has_many :works, -> { includes(:student).order('score desc', 'students.original_id') }
 
+  scope :by, ->(year, number) { find_by(term_id: year, number: number) }
   scope :ordered, -> { order(term_id: :desc, number: :desc) }
   scope :latest, -> { ordered.first }
   scope :latest3, -> { ordered.limit(3) }

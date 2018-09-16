@@ -2,10 +2,11 @@ class Work < ApplicationRecord
   belongs_to :subject, counter_cache: true, touch: true
   belongs_to :student, counter_cache: true, touch: true
 
+  scope :by, ->(original_id) { find_by(original_id: original_id) }
   scope :ordered, -> { includes(:subject).order('subjects.term_id desc', 'subjects.number desc') }
 
   def synopsis
-    Synopsis.find_by(subject_id: subject_id, student_id: student_id)
+    Synopsis.by(original_id)
   end
 
   def content
