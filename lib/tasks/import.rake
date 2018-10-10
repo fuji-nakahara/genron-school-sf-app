@@ -41,7 +41,7 @@ namespace :import do
 
     Subject.where('work_deadline_date >= ?', date).each { |subject| ImportWorksJob.perform_now(subject) }
     Work.includes(:student, :subject).where('created_at > ?', start_time).each do |work|
-      screen_name = synopsis.student.twitter_screen_name.nil? ? nil : " @#{synopsis.student.twitter_screen_name} "
+      screen_name = work.student.twitter_screen_name.nil? ? nil : " @#{work.student.twitter_screen_name} "
 
       title  = "【実作】#{work.student.name}#{screen_name}『#{work.title.truncate(80)}』"
       quote  = %(\n"#{work.content.truncate(80, separator: '。')}")
