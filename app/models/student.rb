@@ -5,6 +5,12 @@ class Student < ApplicationRecord
   has_many :synopses, -> { ordered }
   has_many :works, -> { ordered }
 
+  scope :find_or_fetch_by!, ->(attributes) do
+    record = Student.find_or_initialize_by(attributes)
+    record.update_info! if record.new_record?
+    record
+  end
+
   def self.of(original_id)
     find_by(original_id: original_id)
   end
