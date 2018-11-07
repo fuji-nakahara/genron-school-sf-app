@@ -3,7 +3,8 @@
 %header
   %h1= @student.name
 
-%p= simple_format(auto_link(@student.profile))
+- if @student.profile.present?
+  %p= simple_format(auto_link(@student.profile))
 
 = render 'shared/link_to_original', obj: @student
 
