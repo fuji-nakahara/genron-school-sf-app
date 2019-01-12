@@ -16,7 +16,11 @@ module GenronSf
       end
 
       def summary
-        @summary ||= doc.at_css('.summary-content').tap { |e| e.at_css('.count-character').remove }.children.to_html.strip
+        @summary ||= doc.at_css('.summary-content').children[0...-2].to_html.strip
+      end
+
+      def summary_character_count
+        @summary_character_count ||= doc.at_css('.summary-content .count-character').content[/文字数：(\d+)/, 1].to_i
       end
 
       def work_title
@@ -24,11 +28,19 @@ module GenronSf
       end
 
       def body
-        @body ||= doc.at_css('.work-content').tap { |e| e.at_css('.count-character').remove }.children.to_html.strip
+        @body ||= doc.at_css('.work-content')&.children&.slice(0...-2)&.to_html&.strip
+      end
+
+      def work_character_count
+        @work_character_count ||= doc.at_css('.work-content .count-character')&.content&.slice(/文字数：(\d+)/, 1)&.to_i
       end
 
       def appeal
-        @appeal ||= doc.at_css('.appeal-content')&.tap { |e| e.at_css('.count-character')&.remove }&.children&.to_html&.strip
+        @appeal ||= doc.at_css('.appeal-content')&.children&.slice(0...-2)&.to_html&.strip
+      end
+
+      def appeal_character_count
+        @appeal_character_count ||= doc.at_css('.appeal-content .count-character')&.content&.slice(/文字数：(\d+)/, 1)&.to_i
       end
     end
   end
