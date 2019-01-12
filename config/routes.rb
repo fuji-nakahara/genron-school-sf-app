@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     "http://school.genron.co.jp/works/sf/#{year.presence || 2018}/students/"
   end
 
-  direct :original_student do |year, student|
+  direct :original_student do |student, year|
     "http://school.genron.co.jp/works/sf/#{year || student.terms.last.id}/students/#{student.original_id}/"
   end
 

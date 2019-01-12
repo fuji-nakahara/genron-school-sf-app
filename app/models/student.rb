@@ -30,7 +30,7 @@ class Student < ApplicationRecord
   end
 
   def original_url(year = terms.last.id)
-    Rails.application.routes.url_helpers.original_student_url(year, self)
+    Rails.application.routes.url_helpers.original_student_url(self, year)
   end
 
   def original_urls
