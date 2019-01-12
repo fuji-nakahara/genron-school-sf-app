@@ -1,4 +1,4 @@
-= link_to synopsis_path(synopsis), class: "list-group-item list-group-item-action #{local_assigns.fetch(:class, '')}" do
+= link_to synopsis.original_url, target: :_blank, class: "list-group-item list-group-item-action #{local_assigns.fetch(:class, '')}" do
   .d-flex.justify-content-between.align-items-start
     %h5= synopsis.title.presence || '(タイトルなし）'
     - if synopsis.selected
