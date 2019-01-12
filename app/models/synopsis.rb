@@ -1,6 +1,8 @@
 class Synopsis < ApplicationRecord
   include Submitted
 
+  scope :selected, -> { where(selected: true) }
+
   def work
     Work.of(original_id)
   end
