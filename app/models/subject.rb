@@ -10,6 +10,8 @@ class Subject < ApplicationRecord
   scope :latest3, -> { ordered.limit(3) }
   scope :previous, -> { ordered.second }
 
+  alias_attribute :year, :term_id
+
   def no_synopsis?
     comment_date.nil?
   end
