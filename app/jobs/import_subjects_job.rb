@@ -8,6 +8,8 @@ class ImportSubjectsJob < ApplicationJob
   def perform(*years)
     years = years.presence || Term.pluck(:id)
     years.each do |year|
+      logger.info "Importing subjects of #{year}"
+
       subjects = GenronSf::Client.get_subject_list(year)
       subjects.each do |subject|
         Subject.create_with(

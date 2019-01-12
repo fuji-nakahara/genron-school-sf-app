@@ -9,6 +9,8 @@ class ImportStudentsJob < ApplicationJob
     years.each do |year|
       original_ids = GenronSf::Client.get_student_list(year).map(&:id)
       original_ids.each do |original_id|
+        logger.info "Importing student: #{year}/#{original_id}"
+
         student = Student.find_or_initialize_by(original_id: original_id)
         student.update_info!(year)
       end

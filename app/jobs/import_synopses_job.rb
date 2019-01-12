@@ -7,6 +7,8 @@ class ImportSynopsesJob < ApplicationJob
     return if subject.no_synopsis?
     work_infos = GenronSf::Client.get_subject(subject.term_id, subject.number).synopses
     work_infos.each do |work_info|
+      logger.info "Importing synopsis: #{subject.year}/#{subject.number}/#{work_info.student_id}/#{work_info.id}"
+
       work    = GenronSf::Client.get_work(subject.term_id, work_info.student_id, work_info.id)
       student = Student.find_or_fetch_by!(original_id: work.student_id)
       Synopsis.find_or_create_by!(subject: subject, student: student, original_id: work.id) do |s|
