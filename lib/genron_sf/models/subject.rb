@@ -1,7 +1,8 @@
 module GenronSf
   module Models
     class Subject < Base
-      WorkInfo = Struct.new(:student_id, :id)
+      WorkInfo          = Struct.new(:student_id, :id)
+      ExcellentWorkInfo = Struct.new(:student_id, :id, :score)
 
       attr_reader :year, :number
 
@@ -34,12 +35,11 @@ module GenronSf
         @work_comment_date ||= parse_date(doc.at_css('#main .entry-description .date-comment-work .date').content)
       end
 
-      def work_id_to_score
-        @work_id_to_score ||= doc.css('.type-excellents').map do |element|
-          work_id = element.at_css('a')['href']&.split('/')&.last
-          score   = element.at_css('.score')&.content
-          [work_id, score] unless work_id.nil?
-        end.compact.to_h
+      def excellent_works
+        @excellent_works ||= doc.css('.type-excellents').map do |element|
+          arr = element.at_css('a')['href']&.split('/')&.slice(-2..-1)
+          ExcellentWorkInfo.new(arr[0], arr[1], element.at_css('.score')&.content&.to_i) if arr.present?
+        end.compact
       end
 
       def synopses

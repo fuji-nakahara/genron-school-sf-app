@@ -4,16 +4,19 @@ class ImportScoresJob < ApplicationJob
   queue_as :default
 
   def perform(subject = Subject.previous)
-    original_id_to_score = GenronSf::Client.get_subject(subject.term_id, subject.number).work_id_to_score
-    return if original_id_to_score.empty?
+    excellent_works = GenronSf::Client.get_subject(subject.year, subject.number).excellent_works
+    return if excellent_works.empty?
 
     all_selected_synopses = YAML.load_file(Rails.root.join('data', 'selected_synopses.yml'))
-    selected_synopsis_ids = all_selected_synopses[subject.year]&.[](subject.number) || original_id_to_score.keys
+    selected_synopsis_ids = all_selected_synopses.dig(subject.year, subject.number) || excellent_works.map(&:id)
     subject.synopses.selected.update_all(selected: false)
     Synopsis.where(original_id: selected_synopsis_ids).update_all(selected: true)
 
-    original_id_to_score.each do |original_id, score|
-      Work.find_by!(original_id: original_id).update_attribute(:score, score) if score.present? && score.to_i > 0
+    excellent_works.each do |excellent_work|
+      if excellent_work.score&.> 0
+        student = Student.of(excellent_work.student_id)
+        Work.find_or_create_by!(subject: subject, student: student, original_id: excellent_work.id).update_attribute(:score, excellent_work.score)
+      end
     end
   end
 end
