@@ -6,7 +6,10 @@
   %ul.list-inline.text-muted
     %li.list-inline-item= @student.original_id
     - if @student.twitter_screen_name.present?
-      %li.list-inline-item= link_to "@#{@student.twitter_screen_name}", twitter_user_url(@student.twitter_screen_name), target: :_blank
+      %li.list-inline-item= link_to "@#{@student.twitter_screen_name}", twitter_user_url(@student.twitter_screen_name), target: '_blank'
+    - if @student.profile_urls.present?
+      - @student.profile_urls.each do |url|
+        %li.list-inline-item= link_to url, url, target: '_blank'
 
 %dl.row.mb-5
   - @student.terms.each do |term|

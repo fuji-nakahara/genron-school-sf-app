@@ -47,4 +47,8 @@ class Student < ApplicationRecord
   def twitter_screen_name
     @twitter_screen_name ||= Twitter::TwitterText::Extractor.extract_mentioned_screen_names(profile).first
   end
+
+  def profile_urls
+    URI.extract(profile, %w[http https]) if profile
+  end
 end
