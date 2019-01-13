@@ -1,46 +1,54 @@
 - content_for :title, @student.name
 
-%header
-  %h1= @student.name
+%header.text-center
+  %h1
+    = @student.name
+  %ul.list-inline.text-muted
+    %li.list-inline-item= @student.original_id
+    - if @student.twitter_screen_name.present?
+      %li.list-inline-item= link_to "@#{@student.twitter_screen_name}", twitter_user_url(@student.twitter_screen_name), target: :_blank
 
-- if @student.profile.present?
-  %p= simple_format(auto_link(@student.profile))
+%dl.row.mb-5
+  - @student.terms.each do |term|
+    %dt.col-6.text-right= term.id
+    %dd.col-6.text-left #{@student.score(term.id)}点
 
 = render 'shared/link_to_original', obj: @student
 
-%section.mb-5
-  %header
-    %h2 得点
-  %dl.row
-    - @student.terms.each do |term|
-      .col-4.col-md-2
-        %dt= term.id
-        %dd= @student.score(term.id)
-
 - unless @student.works.empty?
   %section.mb-5
-    %header
+    %header.text-center
       %h2 実作
-    - @student.works.group_by { |w| w.subject.term_id }.each do |year, works|
-      %section
-        %header
-          %h4= year
-        .list-group
-          - works.each do |work|
-            - cache work do
-              = render work do
-                %span.text-muted.link{ data: { href: subject_path(work.subject) } } #{work.subject.display_number} #{work.subject.title}
+    .row.justify-content-center
+      - @student.works.group_by { |w| w.subject.year }.each do |year, works|
+        %section.col-lg-6.mb-3
+          %header.text-center
+            %h4
+              = year
+              %span.badge.badge-primary.badge-pill= works.size
+          .list-group
+            - works.each do |work|
+              - cache work do
+                = render work do
+                  .d-flex.justify-content-between
+                    %span.text-muted.link{ data: { href: subject_path(work.subject) } } #{work.subject.display_number} #{work.subject.title}
+                    %span.text-muted #{number_with_delimiter(work.character_count)}字
 
 - unless @student.synopses.empty?
   %section.mb-5
-    %header
+    %header.text-center
       %h2 梗概
-    - @student.synopses.group_by { |w| w.subject.term_id }.each do |year, synopses|
-      %section.mb-3
-        %header
-          %h4= year
-        .list-group
-          - synopses.each do |synopsis|
-            - cache synopsis do
-              = render synopsis do
-                %span.text-muted.link{ data: { href: subject_path(synopsis.subject) } } #{synopsis.subject.display_number} #{synopsis.subject.title}
+    .row.justify-content-center
+      - @student.synopses.group_by { |w| w.subject.year }.each do |year, synopses|
+        %section.col-lg-6.mb-3
+          %header.text-center
+            %h4
+              = year
+              %span.badge.badge-secondary.badge-pill= synopses.size
+          .list-group
+            - synopses.each do |synopsis|
+              - cache synopsis do
+                = render synopsis do
+                  .d-flex.justify-content-between
+                    %span.text-muted.link{ data: { href: subject_path(synopsis.subject) } } #{synopsis.subject.display_number} #{synopsis.subject.title}
+                    %span.text-muted #{number_with_delimiter(synopsis.character_count)}字

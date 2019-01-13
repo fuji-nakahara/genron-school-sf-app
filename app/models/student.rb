@@ -38,6 +38,6 @@ class Student < ApplicationRecord
   end
 
   def twitter_screen_name
-    Twitter::TwitterText::Extractor.extract_mentioned_screen_names(profile).first
+    @twitter_screen_name ||= Twitter::TwitterText::Extractor.extract_mentioned_screen_names(profile).first
   end
 end

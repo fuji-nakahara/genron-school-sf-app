@@ -22,4 +22,8 @@ Rails.application.routes.draw do
   direct :original_work do |work|
     "http://school.genron.co.jp/works/sf/#{work.subject.term_id}/students/#{work.student.original_id}/#{work.original_id}/"
   end
+
+  direct :twitter_user do |screen_name|
+    "https://twitter.com/#{screen_name}"
+  end
 end

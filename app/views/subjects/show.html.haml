@@ -1,10 +1,10 @@
 - content_for :title, @subject.title
 
-%header
+%header.mb-5.text-center
   .lead.text-muted #{@subject.term_id} #{@subject.display_number}
   %h1= @subject.title
 
-%dl.row
+%dl.row.justify-content-center.mb-5
   - unless @subject.deadline_date.nil?
     .col-6.col-md-3
       %dt 梗概締切
@@ -22,22 +22,31 @@
 
 = render 'shared/link_to_original', obj: @subject
 
-- unless @subject.works.empty?
-  %section.mb-5
-    %header
-      %h2 実作
-    .list-group
-      - @subject.works.each do |work|
-        - cache work do
-          = render work do
-            %span.text-muted.link{ data: { href: student_path(work.student) } }= work.student.name
+.row.justify-content-center
+  - unless @subject.works.empty?
+    %section.col-md-6.mb-5
+      %header.text-center
+        %h2
+          実作
+          %span.badge.badge-primary.badge-pill= @subject.works.size
+      .list-group
+        - @subject.works.each do |work|
+          - cache work do
+            = render work do
+              .d-flex.justify-content-between
+                %span.text-muted.link{ data: { href: student_path(work.student) } }= work.student.name
+                %span.text-muted #{number_with_delimiter(work.character_count)}字
 
-- unless @subject.synopses.empty?
-  %section.mb-5
-    %header
-      %h2 梗概
-    .list-group
-      - @subject.synopses.each do |synopsis|
-        - cache synopsis do
-          = render synopsis do
-            %span.text-muted.link{ data: { href: student_path(synopsis.student) } }= synopsis.student.name
+  - unless @subject.synopses.empty?
+    %section.col-md-6.mb-5
+      %header.text-center
+        %h2
+          梗概
+          %span.badge.badge-secondary.badge-pill= @subject.synopses.size
+      .list-group
+        - @subject.synopses.each do |synopsis|
+          - cache synopsis do
+            = render synopsis do
+              .d-flex.justify-content-between
+                %span.text-muted.link{ data: { href: student_path(synopsis.student) } }= synopsis.student.name
+                %span.text-muted #{number_with_delimiter(synopsis.character_count)}字

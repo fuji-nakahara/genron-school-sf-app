@@ -13,7 +13,9 @@
             - subject.works.includes(:student, :subject).where('score > 0').each do |work|
               - cache work do
                 = render work do
-                  %span.text-muted.link{ data: { href: student_path(work.student) } }= work.student.name
+                  .d-flex.justify-content-between
+                    %span.text-muted.link{ data: { href: student_path(work.student) } }= work.student.name
+                    %span.text-muted #{number_with_delimiter(work.character_count)}字
           - elsif subject.works.exists?
             - subject.works.includes(:student, :subject).unscope(:order).order(created_at: :desc).each do |work|
               = render work do
@@ -24,7 +26,9 @@
             - subject.synopses.includes(:student, :subject).where(selected: true).each do |synopsis|
               - cache synopsis do
                 = render synopsis do
-                  %span.text-muted.link{ data: { href: student_path(synopsis.student) } }= synopsis.student.name
+                  .d-flex.justify-content-between
+                    %span.text-muted.link{ data: { href: student_path(synopsis.student) } }= synopsis.student.name
+                    %span.text-muted #{number_with_delimiter(synopsis.character_count)}字
           - else
             - subject.synopses.includes(:student, :subject).unscope(:order).order(created_at: :desc).each do |synopsis|
               = render synopsis do
