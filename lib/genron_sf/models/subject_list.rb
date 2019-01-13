@@ -22,7 +22,7 @@ module GenronSf
       def subjects
         @subjects ||= doc.css('.page-content article').map do |e|
           number             = e.at_css('.number').content.scan(/\d+/).first.to_i
-          title              = e.at_css('h1').content.gsub(/[「」]/, '')
+          title              = e.at_css('h1').content.strip[/\A「(.*)」\z/, 1]
           deadline_date      = parse_date(e.at_css('.date-deadline .date')&.content)
           comment_date       = parse_date(e.at_css('.date-comment .date')&.content)
           work_deadline_date = parse_date(e.at_css('.date-deadline-work .date').content)

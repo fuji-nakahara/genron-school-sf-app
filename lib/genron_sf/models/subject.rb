@@ -12,7 +12,7 @@ module GenronSf
       end
 
       def title
-        @title ||= doc.at_css('#main h1.entry-title').content.gsub(/[「」]/, '')
+        @title ||= doc.at_css('#main h1.entry-title').content.strip[/\A「(.*)」\z/, 1]
       end
 
       def detail
