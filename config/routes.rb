@@ -4,6 +4,10 @@ Rails.application.routes.draw do
   resources :students, only: %i[index show]
   resources :scores, only: :show
 
+  direct :original_root do
+    'https://school.genron.co.jp/works/sf/'
+  end
+
   direct :original_students do |year|
     "http://school.genron.co.jp/works/sf/#{year.presence || 2018}/students/"
   end

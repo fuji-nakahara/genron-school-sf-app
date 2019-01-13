@@ -12,13 +12,16 @@
   %body
     %nav.navbar.navbar-expand-sm.navbar-dark.sticky-top.bg-dark.mb-3
       .container
-        = link_to 'SF創作講座', root_path, class: 'navbar-brand'
+        = link_to 'SF創作講座', original_root_url, target: :_blank, class: 'navbar-brand'
         %button.navbar-toggler{ type: 'button', 'data-toggle': 'collapse', 'data-target': '#navbar-collapse', 'aria-controls': 'navbar-collapse', 'aria-expanded': 'false', 'aria-label': 'Toggle navigation' }
           %span.navbar-toggler-icon
         #navbar-collapse.collapse.navbar-collapse
           %ul.navbar-nav.mr-auto
-            %li.nav-item{ class: params[:controller] == 'subjects' ? 'active' : '' }= link_to '課題一覧', subjects_path, class: 'nav-link'
-            %li.nav-item{ class: params[:controller] == 'students' ? 'active' : '' }= link_to '受講生一覧', students_path, class: 'nav-link'
+            %li.nav-item{ class: params[:controller] == 'top' ? 'active' : '' }= link_to 'ホーム', root_path, class: 'nav-link'
+            %li.nav-item{ class: params[:controller] == 'subjects' ? 'active' : '' }= link_to '課題', subjects_path, class: 'nav-link'
+            %li.nav-item{ class: params[:controller] == 'students' ? 'active' : '' }= link_to '受講生', students_path, class: 'nav-link'
             %li.nav-item{ class: params[:controller] == 'scores' ? 'active' : '' }= link_to '得点', score_path(:latest), class: 'nav-link'
+          %ul.navbar-nav
+            %li.nav-item= link_to 'フジ・ナカハラ', 'https://fuji-nakahara.github.io/', target: :_blank, class: 'nav-link'
     .container
       = yield
