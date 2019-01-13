@@ -20,7 +20,7 @@
 
 - unless @student.works.empty?
   %section.mb-5
-    %header.text-center
+    %header.text-center.mb-3
       %h2 実作
     .row.justify-content-center
       - @student.works.group_by { |w| w.subject.year }.each do |year, works|
@@ -39,7 +39,7 @@
 
 - unless @student.synopses.empty?
   %section.mb-5
-    %header.text-center
+    %header.text-center.mb-3
       %h2 梗概
     .row.justify-content-center
       - @student.synopses.group_by { |w| w.subject.year }.each do |year, synopses|
