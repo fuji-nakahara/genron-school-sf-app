@@ -1,4 +1,4 @@
-- content_for :title, '課題一覧'
+- content_for :title, '課題'
 
 - @subjects.group_by(&:term_id).each do |year, subjects|
   %section.mb-5
