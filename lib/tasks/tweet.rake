@@ -8,24 +8,20 @@ task tweet: :environment do
 
   twitter_client = TwitterClient.new
 
-  subjects = Subject.where('created_at > ?', last_tweet_time).to_a
-  synopses = Synopsis.includes(:student, :subject).where('created_at > ?', last_tweet_time).to_a
-  works    = Work.includes(:student, :subject).where('created_at > ?', last_tweet_time).to_a
-
-  Rails.cache.write(CACHE_KEY, Time.zone.now)
-
-  subjects.each do |subject|
+  Subject.where('created_at > ?', last_tweet_time).each do |subject|
     twitter_client.update_subject(subject)
     sleep 1
   end
 
-  synopses.each do |synopsis|
+  Synopsis.includes(:student, :subject).where('created_at > ?', last_tweet_time).each do |synopsis|
     twitter_client.update_synopsis(synopsis)
     sleep 1
   end
 
-  works.each do |work|
+  Work.includes(:student, :subject).where('created_at > ?', last_tweet_time).each do |work|
     twitter_client.update_work(work)
     sleep 1
   end
+
+  Rails.cache.write(CACHE_KEY, Time.zone.now)
 end
