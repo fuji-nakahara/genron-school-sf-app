@@ -1,5 +1,8 @@
 {
   "name": "genron-school-sf-app",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "chart.js": "^2.7.3",
+    "google-palette": "^1.1.0"
+  }
 }
