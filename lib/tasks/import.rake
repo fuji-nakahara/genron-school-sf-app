@@ -30,19 +30,4 @@ namespace :import do
     years = ENV.fetch('YEARS', '').split(',').map(&:to_i).presence || [Term.last.id]
     ImportStudentsJob.perform_now(*years)
   end
-
-  desc 'Update character_count columns'
-  task character_counts: :environment do
-    require 'genron_sf/client'
-
-    Synopsis.includes(:subject, :student).all.each do |synopsis|
-      result = GenronSf::Client.get_work(synopsis.subject.year, synopsis.student.original_id, synopsis.original_id)
-      synopsis.update_columns(character_count: result.summary_character_count, appeal_character_count: result.appeal_character_count)
-    end
-
-    Work.includes(:subject, :student).all.each do |work|
-      result = GenronSf::Client.get_work(work.subject.year, work.student.original_id, work.original_id)
-      work.update_columns(character_count: result.work_character_count, appeal_character_count: result.appeal_character_count)
-    end
-  end
 end
