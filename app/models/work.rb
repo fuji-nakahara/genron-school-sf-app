@@ -1,9 +1,7 @@
 class Work < ApplicationRecord
   include Submitted
 
-  def synopsis
-    Synopsis.of(original_id)
-  end
+  has_one :synopsis, foreign_key: :original_id, primary_key: :original_id
 
   def to_xhtml(style_path: nil)
     html = <<~HTML

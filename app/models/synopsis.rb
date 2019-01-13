@@ -1,11 +1,9 @@
 class Synopsis < ApplicationRecord
   include Submitted
 
-  scope :selected, -> { where(selected: true) }
+  has_one :work, foreign_key: :original_id, primary_key: :original_id
 
-  def work
-    Work.of(original_id)
-  end
+  scope :selected, -> { where(selected: true) }
 
   def to_xhtml(style_path: nil)
     html = <<~HTML
