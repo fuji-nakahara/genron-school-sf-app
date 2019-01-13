@@ -1,30 +1,33 @@
 # genron-sf-app
 
+https://genron-sf.herokuapp.com/
+
 [超・SF作家育成サイト](http://school.genron.co.jp/works/sf/) の作品を楽しむための [Ruby on Rails](https://rubyonrails.org/) アプリケーション。
   
 以下の機能があります。
 
-- 梗概や実作といったコンテンツのデータベース保存
-- Web UI による快適な作品閲覧
-- 課題ごとの全作品をまとめた電子書籍作成
+- 超・SF作家育成サイトのコンテンツをスクレイピングし、データベースへ保存できる
+- シンプルな Web UI でコンテンツを閲覧できる
+- 課題ごとに作品をまとめた電子書籍を作成できる
+- コンテンツの更新をツイートできる
 
 ## 要件
 
-- Ruby 2.5
-- PostgreSQL 9.2 以降
+- Ruby 2.6
+- PostgreSQL 9.2〜
 
 ## 基本的な使い方
 
-### 作品をダウンロードする
+### コンテンツをスクレイピングし、データベースへ保存する
 
 はじめに、以下のコマンドで依存ライブラリのインストール、データベースの作成、全コンテンツのスクレイピングを行います。  
 超・SF作家育成サイトの全ページに同期的にアクセスするため、 **非常に時間がかかります** 。
 
     $ bin/setup
 
-### 作品を閲覧する
+### コンテンツを閲覧する
 
-データベースに保存した作品をブラウザで閲覧するには、以下のコマンドで Web サーバを起動して http://localhost:3000 にアクセスします。
+データベースに保存したコンテンツをブラウザで確認するには、以下のコマンドで Web サーバを起動して http://localhost:3000 にアクセスします。
 
     $ bin/rails server
 
@@ -34,7 +37,7 @@
 
 以下のコマンドを実行すると `output` ディレクトリに課題ごとの作品をまとめた EPUB と MOBI ファイルが作成されます。
 
-    $ bin/rake ebook:generate YEAR=2018 NUMBER=1 # 2018年第1回課題の作品をまとめた電子書籍を作成
+    $ bin/rails ebook:generate YEAR=2018 NUMBER=1 # 2018年第1回課題の作品をまとめた電子書籍を作成
 
 ## 発展的な使い方
 
@@ -47,11 +50,15 @@
 
     $ bin/rails runner 'p Term.find(2018).students.includes(:synopses).reject { |s| s.synopses.size.zero? }.map { |s| [s.name, s.synopses.map(&:content).map(&:size).sum / s.synopses.size.to_f] }.sort { |a, b| b[1] <=> a[1] }.to_h' 
 
-### 作品提出をツイートする
+### コンテンツを定期的に更新する
 
-超・SF作家育成サイト 更新通知 bot (非公式) [@genron_sf_bot](https://twitter.com/genron_sf_bot) は以下のコマンドを定期実行して運用しています。
+https://genron-sf.herokuapp.com/ では以下の3つのコマンドを定期実行して、超・SF作家育成サイトの更新を無理のない範囲で反映しています。
 
-    $ bin/rake import:latest
+    $ bin/rails import:latest && bin/rails tweet
+    $ bin/rails import:studetns
+    $ bin/rails import:scores 
+
+超・SF作家育成サイト 更新通知 bot (非公式) [@genron_sf_bot](https://twitter.com/genron_sf_bot) は `bin/rails tweet` で運用しています。
 
 ## ライセンス
 
