@@ -3,7 +3,7 @@ require 'genron_sf/client'
 class ImportWorksJob < ApplicationJob
   queue_as :default
 
-  def perform(subject = Subject.previous)
+  def perform(subject = Subject.latest_second)
     work_infos = GenronSf::Client.get_subject(subject.term_id, subject.number).works(no_synopsis: subject.no_synopsis?)
     work_infos.each do |work_info|
       logger.info "Importing work: #{subject.year}/#{subject.number}/#{work_info.student_id}/#{work_info.id}"

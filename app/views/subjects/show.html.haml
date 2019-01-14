@@ -4,7 +4,7 @@
   .lead.text-muted #{@subject.term_id} #{@subject.display_number}
   %h1= @subject.title
 
-%dl.row.justify-content-center.mb-5
+%dl.row.justify-content-center
   - if @subject.proposer
     %dt.col-6.text-right= Lecturer::ROLE_NAME_PROPOSER
     %dd.col-6.text-left= @subject.proposer&.name
@@ -24,6 +24,17 @@
         %ul.list-inline.with-comma
           - @subject.synopsis_commenters.each do |lecturer|
             %li.list-inline-item= lecturer.name_with_note
+
+%nav.mb-5
+  %ul.pagination.justify-content-center
+    - if @subject.previous
+      %li.page-item
+        = link_to @subject.previous, class: 'page-link' do
+          &laquo; #{@subject.previous.display_number}
+    - if @subject.next
+      %li.page-item
+        = link_to @subject.next, class: 'page-link' do
+          #{@subject.next.display_number} &raquo;
 
 = render 'shared/link_to_original', obj: @subject
 

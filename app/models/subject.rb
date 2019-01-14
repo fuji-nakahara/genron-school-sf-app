@@ -10,7 +10,7 @@ class Subject < ApplicationRecord
   scope :ordered, -> { order(term_id: :desc, number: :desc) }
   scope :latest, -> { ordered.first }
   scope :latest3, -> { ordered.limit(3) }
-  scope :previous, -> { ordered.second }
+  scope :latest_second, -> { ordered.second }
 
   alias_attribute :year, :term_id
 
@@ -26,6 +26,14 @@ class Subject < ApplicationRecord
 
   def date
     comment_date || work_comment_date
+  end
+
+  def previous
+    Subject.in(term.year).of(number - 1).first
+  end
+
+  def next
+    Subject.in(term.year).of(number + 1).first
   end
 
   def proposer

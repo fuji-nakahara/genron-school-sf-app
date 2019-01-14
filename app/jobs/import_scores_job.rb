@@ -3,7 +3,7 @@ require 'genron_sf/client'
 class ImportScoresJob < ApplicationJob
   queue_as :default
 
-  def perform(subject = Subject.previous)
+  def perform(subject = Subject.latest_second)
     excellent_works = GenronSf::Client.get_subject(subject.year, subject.number).excellent_works
     return if excellent_works.empty?
 
