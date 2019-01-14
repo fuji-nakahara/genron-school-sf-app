@@ -14,18 +14,19 @@ class Subject < ApplicationRecord
 
   alias_attribute :year, :term_id
 
-  LAST_NUMBER = 11
+  LAST_WORK_NUMBER     = 11
+  LAST_SYNOPSIS_NUMBER = LAST_WORK_NUMBER - 1
 
   def no_synopsis?
-    number == LAST_NUMBER
+    number == LAST_WORK_NUMBER
   end
 
   def no_work?
-    number == LAST_NUMBER - 1
+    number == LAST_SYNOPSIS_NUMBER
   end
 
   def last?
-    number == LAST_NUMBER || number == LAST_NUMBER - 1
+    number == LAST_WORK_NUMBER || number == LAST_SYNOPSIS_NUMBER
   end
 
   def date

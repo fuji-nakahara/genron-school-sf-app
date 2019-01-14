@@ -16,7 +16,9 @@ class Student < ApplicationRecord
   end
 
   def score(year)
-    synopses.includes(:subject).where('subjects.term_id': year).count + works.includes(:subject).where('subjects.term_id': year).sum(:score)
+    synopsis_score = synopses.includes(:subject).where('subjects.term_id': year).not_last.count
+    work_score     = works.includes(:subject).where('subjects.term_id': year).sum(:score)
+    synopsis_score + work_score
   end
 
   def subject_number_to_score(year)

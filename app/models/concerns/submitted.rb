@@ -6,6 +6,7 @@ module Submitted
     belongs_to :student, counter_cache: true, touch: true
 
     scope :ordered, -> { includes(:subject).order('subjects.term_id desc', 'subjects.number desc') }
+    scope :not_last, -> { includes(:subject).where.not('subjects.number': [Subject::LAST_WORK_NUMBER, Subject::LAST_SYNOPSIS_NUMBER])}
   end
 
   module ClassMethods

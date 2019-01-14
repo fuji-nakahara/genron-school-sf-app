@@ -12,8 +12,8 @@ class ImportSubjectsJob < ApplicationJob
       subject_list.each do |fetched_subject|
         subject = Subject.find_or_create_by!(term_id: year, number: fetched_subject.number) do |s|
           s.title              = fetched_subject.title
-          s.deadline_date      = fetched_subject.number == Subject::LAST_NUMBER ? nil : fetched_subject.deadline_date
-          s.comment_date       = fetched_subject.number == Subject::LAST_NUMBER ? nil : fetched_subject.comment_date
+          s.deadline_date      = fetched_subject.number == Subject::LAST_WORK_NUMBER ? nil : fetched_subject.deadline_date
+          s.comment_date       = fetched_subject.number == Subject::LAST_WORK_NUMBER ? nil : fetched_subject.comment_date
           s.work_deadline_date = fetched_subject.work_deadline_date
           s.work_comment_date  = fetched_subject.work_comment_date
         end
