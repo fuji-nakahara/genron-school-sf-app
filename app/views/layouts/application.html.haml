@@ -16,7 +16,7 @@
         %button.navbar-toggler{ type: 'button', 'data-toggle': 'collapse', 'data-target': '#navbar-collapse', 'aria-controls': 'navbar-collapse', 'aria-expanded': 'false', 'aria-label': 'Toggle navigation' }
           %span.navbar-toggler-icon
         #navbar-collapse.collapse.navbar-collapse
-          %ul.navbar-nav.mr-auto
+          %ul.navbar-nav.mx-auto
             %li.nav-item{ class: params[:controller] == 'top' ? 'active' : '' }= link_to 'ホーム', root_path, class: 'nav-link'
             %li.nav-item{ class: params[:controller] == 'subjects' ? 'active' : '' }= link_to '課題', subjects_path, class: 'nav-link'
             %li.nav-item{ class: params[:controller] == 'students' ? 'active' : '' }= link_to '受講生', students_path, class: 'nav-link'
