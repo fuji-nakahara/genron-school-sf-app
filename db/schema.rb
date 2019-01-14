@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_12_090152) do
+ActiveRecord::Schema.define(version: 2019_01_14_045408) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "lecturers", force: :cascade do |t|
+    t.bigint "subject_id", null: false
+    t.string "name", null: false
+    t.string "note"
+    t.string "roles", default: [], null: false, array: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_lecturers_on_name"
+    t.index ["roles"], name: "index_lecturers_on_roles", using: :gin
+    t.index ["subject_id"], name: "index_lecturers_on_subject_id"
+  end
 
   create_table "students", force: :cascade do |t|
     t.string "name", null: false
@@ -86,6 +98,7 @@ ActiveRecord::Schema.define(version: 2019_01_12_090152) do
     t.index ["subject_id"], name: "index_works_on_subject_id"
   end
 
+  add_foreign_key "lecturers", "subjects"
   add_foreign_key "subjects", "terms"
   add_foreign_key "synopses", "students"
   add_foreign_key "synopses", "subjects"

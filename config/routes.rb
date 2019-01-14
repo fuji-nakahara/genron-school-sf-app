@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root 'top#show'
   resources :subjects, only: %i[index show]
   resources :students, only: %i[index show]
+  resources :lecturers, only: :index
   resources :scores, only: :show
 
   direct :original_root do

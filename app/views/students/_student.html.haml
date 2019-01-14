@@ -5,7 +5,7 @@
       %span.badge.badge-primary.badge-pill= student.works.size
     - if student.synopses.size > 0
       %span.badge.badge-secondary.badge-pill.ml-1= student.synopses.size
-  %ul.list-inline.text-muted.mb-0
+  %ul.list-inline.with-comma.text-muted.mb-0
     %li.list-inline-item= student.original_id
     - if student.twitter_screen_name.present?
       %li.list-inline-item @#{student.twitter_screen_name}

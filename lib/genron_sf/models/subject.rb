@@ -1,3 +1,6 @@
+require_relative 'base'
+require_relative 'lecturer_list'
+
 module GenronSf
   module Models
     class Subject < Base
@@ -17,6 +20,10 @@ module GenronSf
 
       def detail
         @detail ||= doc.at_css('#main .entry-content').content.strip
+      end
+
+      def lecturer_list
+        @lecturer_list ||= LecturerList.new(doc.at_css('#main .lecturer-name-list'))
       end
 
       def deadline_date

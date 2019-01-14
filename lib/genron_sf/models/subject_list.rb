@@ -1,9 +1,10 @@
 require_relative 'base'
+require_relative 'lecturer_list'
 
 module GenronSf
   module Models
     class SubjectList < Base
-      Subject = Struct.new(:number, :title, :deadline_date, :comment_date, :work_deadline_date, :work_comment_date)
+      Subject = Struct.new(:number, :title, :deadline_date, :comment_date, :work_deadline_date, :work_comment_date, :lecturer_list)
 
       include Enumerable
 
@@ -27,7 +28,8 @@ module GenronSf
           comment_date       = parse_date(e.at_css('.date-comment .date')&.content)
           work_deadline_date = parse_date(e.at_css('.date-deadline-work .date').content)
           work_comment_date  = parse_date(e.at_css('.date-comment-work .date').content)
-          Subject.new(number, title, deadline_date, comment_date, work_deadline_date, work_comment_date)
+          lecturer_list      = LecturerList.new(e.at_css('.lecturer-name-list'), year: year, number: number)
+          Subject.new(number, title, deadline_date, comment_date, work_deadline_date, work_comment_date, lecturer_list)
         end
       end
 

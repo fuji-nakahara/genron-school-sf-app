@@ -1,6 +1,6 @@
 class SubjectsController < ApplicationController
   def index
-    @subjects = Subject.ordered
+    @subjects = Subject.includes(:proposers).ordered
   end
 
   def show(id)

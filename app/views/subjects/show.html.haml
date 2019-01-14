@@ -1,24 +1,29 @@
 - content_for :title, @subject.title
 
-%header.mb-5.text-center
+%header.text-center
   .lead.text-muted #{@subject.term_id} #{@subject.display_number}
   %h1= @subject.title
 
 %dl.row.justify-content-center.mb-5
-  - unless @subject.deadline_date.nil?
-    .col-6.col-md-3
-      %dt 梗概締切
-      %dd= l @subject.deadline_date, format: :long
-  - unless @subject.comment_date.nil?
-    .col-6.col-md-3
-      %dt 梗概講評会
-      %dd= l @subject.comment_date, format: :long
-  .col-6.col-md-3
-    %dt 実作締切
-    %dd= l @subject.work_deadline_date, format: :long
-  .col-6.col-md-3
-    %dt 実作講評会
-    %dd= l @subject.work_comment_date, format: :long
+  - if @subject.proposer
+    %dt.col-6.text-right= Lecturer::ROLE_NAME_PROPOSER
+    %dd.col-6.text-left= @subject.proposer&.name
+  - unless @subject.no_work?
+    .col-md-6.text-center
+      %dt 実作講評
+      %dl
+        %time{ datetime: @subject.work_comment_date }= l @subject.work_comment_date, format: :long
+        %ul.list-inline.with-comma
+          - @subject.work_commenters.each do |lecturer|
+            %li.list-inline-item= lecturer.name_with_note
+  - unless @subject.no_synopsis?
+    .col-md-6.text-center
+      %dt 梗概講評
+      %dl
+        %time{ datetime: @subject.comment_date }= l @subject.comment_date, format: :long
+        %ul.list-inline.with-comma
+          - @subject.synopsis_commenters.each do |lecturer|
+            %li.list-inline-item= lecturer.name_with_note
 
 = render 'shared/link_to_original', obj: @subject
 

@@ -1,0 +1,25 @@
+- content_for :title, '講師'
+
+.row
+
+  %section.col-md-6.mb-5
+    %header.text-center.mb-3
+      %h2 作家
+    - @novelist_to_lecturers.each do |name, lecturers|
+      %section.card.mb-3
+        %header.card-header.text-center
+          %h5.mb-0= name
+        .list-group.list-group-flush
+          = render partial: 'lecturers/lecturer', collection: lecturers, cached: true
+
+  %section.col-md-6.mb-5
+    %header.text-center.mb-3
+      %h2 編集者
+    - @editor_to_lecturers.each do |name, lecturers|
+      %section.card.mb-3
+        %header.card-header.text-center
+          %h5.mb-0
+            = name
+            %small.text-muted= lecturers.map(&:note).compact.uniq.join(', ')
+        .list-group.list-group-flush
+          = render partial: 'lecturers/lecturer', collection: lecturers, cached: true
