@@ -41,7 +41,7 @@
 .row.justify-content-center
   - unless @subject.works.empty?
     %section.col-md-6.mb-5
-      %header.text-center
+      %header.text-center.mb-3
         %h2
           実作
           %span.badge.badge-primary.badge-pill= @subject.works.size
@@ -55,7 +55,7 @@
 
   - unless @subject.synopses.empty?
     %section.col-md-6.mb-5
-      %header.text-center
+      %header.text-center.mb-3
         %h2
           梗概
           %span.badge.badge-secondary.badge-pill= @subject.synopses.size
