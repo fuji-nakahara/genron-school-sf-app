@@ -1,9 +1,10 @@
 - content_for :title, '課題'
 
-- @subjects.group_by(&:term_id).each do |year, subjects|
-  %section.mb-5
-    %header
-      %h2= year
+.row
+  - @subjects.group_by(&:term_id).each do |year, subjects|
+    %section.col-lg-6.mb-5
+      %header
+        %h2= year
 
-    .list-group
-      = render partial: 'subjects/subject', collection: subjects, cached: true
+      .list-group
+        = render partial: 'subjects/subject', collection: subjects, cached: true

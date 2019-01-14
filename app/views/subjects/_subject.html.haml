@@ -5,4 +5,6 @@
       %span.badge.badge-primary.badge-pill= subject.works.size
     - if subject.synopses.size > 0
       %span.badge.badge-secondary.badge-pill.ml-1= subject.synopses.size
-  %time.text-muted{ datetime: subject.date }= l subject.date, format: :long
+  .d-flex.justify-content-between
+    %span.text-muted= subject.proposers.map(&:name).join(', ')
+    %time.text-muted{ datetime: subject.date }= l subject.date, format: :long
