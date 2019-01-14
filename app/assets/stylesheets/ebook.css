@@ -1,0 +1,12 @@
+p {
+    text-indent: 1em;
+}
+
+.botenparent {
+    text-emphasis: dot filled;
+    -webkit-text-emphasis: dot filled;
+}
+
+.character-count {
+    text-align: right;
+}
