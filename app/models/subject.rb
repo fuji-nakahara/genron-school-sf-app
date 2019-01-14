@@ -24,6 +24,10 @@ class Subject < ApplicationRecord
     number == LAST_NUMBER - 1
   end
 
+  def last?
+    number == LAST_NUMBER || number == LAST_NUMBER - 1
+  end
+
   def date
     comment_date || work_comment_date
   end

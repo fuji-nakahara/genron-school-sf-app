@@ -34,6 +34,6 @@ class ScoreChart
   private
 
   def subjects(date: Time.zone.today)
-    term.subjects.reject(&:no_synopsis?).select { |subject| subject.work_comment_date.nil? || subject.work_comment_date < date}
+    term.subjects.reject(&:last?).select { |subject| subject.work_comment_date.nil? || subject.work_comment_date < date}
   end
 end
