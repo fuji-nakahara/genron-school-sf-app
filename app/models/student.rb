@@ -21,13 +21,6 @@ class Student < ApplicationRecord
     synopsis_score + work_score
   end
 
-  def subject_number_to_score(year)
-    number_to_synopsis_score = synopses.where('subjects.year': year).pluck('subjects.number').map { |number| [number, 1] }.to_h
-    number_to_work_score     = works.where('subjects.year': year).where('score > 0').pluck('subjects.number', :score).to_h
-
-    number_to_synopsis_score.merge(number_to_work_score) { |_, synopsis_score, work_score| synopsis_score + work_score }
-  end
-
   def update_info!(year)
     student = GenronSf::Client.get_student(year, original_id)
 

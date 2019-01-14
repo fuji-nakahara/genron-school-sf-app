@@ -25,10 +25,6 @@ class Subject < ApplicationRecord
     number == LAST_SYNOPSIS_NUMBER
   end
 
-  def last?
-    number == LAST_WORK_NUMBER || number == LAST_SYNOPSIS_NUMBER
-  end
-
   def date
     comment_date || work_comment_date
   end

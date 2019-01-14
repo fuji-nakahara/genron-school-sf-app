@@ -6,10 +6,11 @@ require_relative 'models/student_list'
 require_relative 'models/subject'
 require_relative 'models/subject_list'
 require_relative 'models/work'
+require_relative 'models/scores'
 
 module GenronSf
   class Client
-    BASE_URL = 'http://school.genron.co.jp/works/sf'.freeze
+    BASE_URL = 'https://school.genron.co.jp/works/sf'.freeze
 
     attr_reader :url
 
@@ -37,6 +38,11 @@ module GenronSf
       def get_work(year, student_id, id)
         doc = new("/#{year}/students/#{student_id}/#{id}/").parse
         Models::Work.new(doc, year: year, student_id: student_id, id: id)
+      end
+
+      def get_scores(year)
+        doc = new("/#{year}/scores").parse
+        Models::Scores.new(doc, year: year)
       end
     end
 

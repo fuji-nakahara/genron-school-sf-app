@@ -16,7 +16,7 @@
     %dt.col-6.text-right= term.id
     %dd.col-6.text-left #{@student.score(term.id)}点
 
-= render 'shared/link_to_original', obj: @student
+= render 'shared/link_to_original', url: @student.original_url
 
 - unless @student.works.empty?
   %section.mb-5

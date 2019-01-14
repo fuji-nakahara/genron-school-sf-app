@@ -36,7 +36,7 @@
         = link_to @subject.next, class: 'page-link' do
           #{@subject.next.display_number} &raquo;
 
-= render 'shared/link_to_original', obj: @subject
+= render 'shared/link_to_original', url: @subject.original_url
 
 .row.justify-content-center
   - unless @subject.works.empty?
