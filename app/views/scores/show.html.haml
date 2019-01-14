@@ -1,7 +1,10 @@
 - content_for :title, "得点 #{@score_chart.year}"
 
-%nav.nav.nav-pills.justify-content-center.mb-3
+%nav.nav.nav-pills.justify-content-center.mb-5
   - Term.all.reverse_order.each do |term|
     = link_to term.id, score_path(term.id), class: "nav-item nav-link#{term.id.to_s == params[:id] ? ' active' : ''}"
+
+= render 'shared/link_to_original', obj: @score_chart
+
 - cache "/scores/#{@score_chart.year}", expires_in: 1.day do
   = render 'score_chart', score_chart: @score_chart

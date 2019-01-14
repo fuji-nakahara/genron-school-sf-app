@@ -29,6 +29,10 @@ Rails.application.routes.draw do
     "http://school.genron.co.jp/works/sf/#{work.subject.term_id}/students/#{work.student.original_id}/#{work.original_id}/"
   end
 
+  direct :original_scores do |year|
+    "https://school.genron.co.jp/works/sf/#{year}/scores/"
+  end
+
   direct :twitter_user do |screen_name|
     "https://twitter.com/#{screen_name}"
   end

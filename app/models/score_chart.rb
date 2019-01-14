@@ -27,6 +27,10 @@ class ScoreChart
     end
   end
 
+  def original_url
+    Rails.application.routes.url_helpers.original_scores_url(year)
+  end
+
   private
 
   def subjects(date: Time.zone.today)
