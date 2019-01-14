@@ -1,12 +1,10 @@
 %p.text-center
-  = link_to '超・SF作家育成サイト', original_root_url, target: '_blank'
+  = link_to 'ゲンロン 大森望 SF創作講座', 'https://school.genron.co.jp/sf/', target: '_blank'
   の非公式まとめサイトです。
   %br
-  著作権法ならびにその他法令には配慮しているつもりですが、
-  %br
-  なにか問題等ありましたらフジ・ナカハラ
-  = mail_to 'fujinakahara2032@gmail.com'
-  までご連絡ください。
+  3期受講生
+  = link_to 'フジ・ナカハラ', Student.of('fujinakahara')
+  が運用しています。
 .row
   - @subjects.each do |subject|
     %section.col-md-6.col-lg-4.mb-5

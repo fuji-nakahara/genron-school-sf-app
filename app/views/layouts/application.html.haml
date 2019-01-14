@@ -22,6 +22,6 @@
             %li.nav-item{ class: params[:controller] == 'students' ? 'active' : '' }= link_to '受講生', students_path, class: 'nav-link'
             %li.nav-item{ class: params[:controller] == 'scores' ? 'active' : '' }= link_to '得点', score_path(:latest), class: 'nav-link'
           %ul.navbar-nav
-            %li.nav-item= link_to 'GitHub', 'https://github.com/fuji-nakahara/genron-sf-app', target: :_blank, class: 'nav-link'
+            %li.nav-item= link_to 'Fork me on GitHub', 'https://github.com/fuji-nakahara/genron-sf-app', target: :_blank, class: 'nav-link'
     .container
       = yield
