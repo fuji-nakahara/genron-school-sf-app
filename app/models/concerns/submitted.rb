@@ -23,7 +23,7 @@ module Submitted
     Rails.application.routes.url_helpers.original_work_url(self)
   end
 
-  def title_and_student_name
-    "#{title}／#{student.name}"
+  def type_name
+    is_a?(Synopsis) ? '梗概' : '実作'
   end
 end

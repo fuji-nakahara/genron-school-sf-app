@@ -1,8 +1,0 @@
-%h2= @work.title_and_student_name
-= raw(@work.body)
-%p.character-count #{number_with_delimiter(@work.character_count)}字
-
-- if @work.appeal.present?
-  %h3 アピール文
-  = raw(@work.appeal)
-  %p.character-count #{number_with_delimiter(@work.appeal_character_count)}字

@@ -37,7 +37,7 @@ https://genron-sf.herokuapp.com/
 
 以下のコマンドを実行すると `output` ディレクトリに課題ごとの作品をまとめた EPUB と MOBI ファイルが作成されます。
 
-    $ bin/rails ebook:subject YEAR=2018 NUMBER=1 # 2018年第1回課題の作品をまとめた電子書籍を作成
+    $ bin/rails ebook:subject
 
 ## 発展的な使い方
 

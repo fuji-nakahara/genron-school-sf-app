@@ -1,0 +1,11 @@
+%h2
+  %small #{@submitted.type_name}
+  %br
+  = @submitted.title
+= raw(@submitted.body)
+%p.character-count #{number_with_delimiter(@submitted.character_count)} 字
+
+- if @submitted.appeal.present?
+  %h3 アピール文
+  = raw(@submitted.appeal)
+  %p.character-count #{number_with_delimiter(@submitted.appeal_character_count)} 字
