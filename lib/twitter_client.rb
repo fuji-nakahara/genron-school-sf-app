@@ -8,14 +8,15 @@ class TwitterClient < Twitter::REST::Client
   end
 
   def update_subject(subject)
-    date_prefix = subject.no_synopsis? ? 'work_' : ''
-    update <<~EOS
-      【課題】 第#{subject.number}回「#{subject.title}」#{subject.proposers.present? ? "\n#{Lecturer::ROLE_NAME_PROPOSER}: #{subject.proposers.join('、')}" : ''}
-      #{subject.no_synopsis? ? '実作' : '梗概'}締切: #{I18n.l(subject.send("#{date_prefix}deadline_date"), format: :long)}
-      講評会: #{I18n.l(subject.send("#{date_prefix}comment_date"), format: :long)}
-      #SF創作講座
-      #{subject.original_url}
-    EOS
+    type_name, date_prefix = subject.no_synopsis? ? ['実作', 'work_'] : ['梗概', '']
+
+    title        = "【課題】 第#{subject.number}回「#{subject.title}」"
+    proposers    = subject.proposers.present? ? "\n#{Lecturer::ROLE_NAME_PROPOSER}: #{subject.proposers.join('、')}" : nil
+    deadline     = "#{type_name}締切: #{I18n.l(subject.send("#{date_prefix}deadline_date"), format: :long)}"
+    commend_date = "講評会: #{I18n.l(subject.send("#{date_prefix}comment_date"), format: :long)}"
+    footer       = "#SF創作講座\n#{subject.original_url}"
+
+    update([title, proposers, deadline, commend_date, footer].compact.join("\n"))
   end
 
   def update_synopsis(synopsis)
