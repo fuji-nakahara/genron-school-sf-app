@@ -26,8 +26,8 @@ module GenronSf
           title              = e.at_css('h1').content.strip[/\A「(.*)」\z/, 1]
           deadline_date      = parse_date(e.at_css('.date-deadline .date')&.content)
           comment_date       = parse_date(e.at_css('.date-comment .date')&.content)
-          work_deadline_date = parse_date(e.at_css('.date-deadline-work .date').content)
-          work_comment_date  = parse_date(e.at_css('.date-comment-work .date').content)
+          work_deadline_date = parse_date(e.at_css('.date-deadline-work .date')&.content)
+          work_comment_date  = parse_date(e.at_css('.date-comment-work .date')&.content)
           lecturer_list      = LecturerList.new(e.at_css('.lecturer-name-list'), year: year, number: number)
           Subject.new(number, title, deadline_date, comment_date, work_deadline_date, work_comment_date, lecturer_list)
         end
