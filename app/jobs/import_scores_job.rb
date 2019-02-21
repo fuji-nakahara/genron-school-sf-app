@@ -9,8 +9,8 @@ class ImportScoresJob < ApplicationJob
 
     all_selected_synopses = YAML.load_file(Rails.root.join('data', 'selected_synopses.yml'))
     selected_synopsis_ids = all_selected_synopses.dig(subject.year, subject.number) || excellent_works.map(&:id)
-    subject.synopses.selected.update_all(selected: false)
-    Synopsis.where(original_id: selected_synopsis_ids).update_all(selected: true)
+    subject.synopses.selected.update_all(selected: false, updated_at: Time.zone.now)
+    Synopsis.where(original_id: selected_synopsis_ids).update_all(selected: true, updated_at: Time.zone.now)
 
     excellent_works.each do |excellent_work|
       if excellent_work.score&.> 0
