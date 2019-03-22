@@ -5,7 +5,7 @@ module TopHelper
     theme, text = case
                   when subject.comment_date&.>(Time.zone.today)
                     %w[primary 梗概提出]
-                  when subject.work_comment_date > Time.zone.today
+                  when subject.work_comment_date&.>(Time.zone.today)
                     %w[success 実作提出]
                   else
                     %w[secondary 終了]
