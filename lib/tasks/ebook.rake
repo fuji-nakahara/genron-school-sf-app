@@ -6,4 +6,14 @@ namespace :ebook do
       puts "Generated: #{subject.year} #{subject.display_number}"
     end
   end
+
+  desc 'Generate student based EPUB and MOBI files'
+  task student: :environment do
+    Student.includes(:terms, synopses: :subject, works: :subject).each do |student|
+      student.terms.each do |term|
+        GenerateStudentEbookJob.perform_now(student, term.year)
+        puts "Generated: #{student.name} #{term.year}"
+      end
+    end
+  end
 end
