@@ -11,7 +11,7 @@ class TwitterClient < Twitter::REST::Client
     type_name, date_prefix = subject.no_synopsis? ? ['実作', 'work_'] : ['梗概', '']
 
     title        = "【課題】 第#{subject.number}回「#{subject.title}」"
-    proposers    = subject.proposers.present? ? "\n#{Lecturer::ROLE_NAME_PROPOSER}: #{subject.proposers.join('、')}" : nil
+    proposers    = subject.proposers.present? ? "\n#{Lecturer::ROLE_NAME_PROPOSER}: #{subject.proposers.pluck(:name).join('、')}" : nil
     deadline     = "#{type_name}締切: #{I18n.l(subject.send("#{date_prefix}deadline_date"), format: :long)}"
     commend_date = "講評会: #{I18n.l(subject.send("#{date_prefix}comment_date"), format: :long)}"
     footer       = "#SF創作講座\n#{subject.original_url}"
